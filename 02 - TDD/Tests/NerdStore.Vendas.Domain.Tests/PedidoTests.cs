@@ -1,5 +1,6 @@
 ﻿using System;
 using Xunit;
+
 namespace NerdStore.Vendas.Domain.Tests
 {
     public class PedidoTests
@@ -10,7 +11,7 @@ namespace NerdStore.Vendas.Domain.Tests
         {
             // Arrange
             var pedido = new Pedido();
-            var pedidoItem = new PedidoItem(Guid.NewGuid, "ProdutoTeste", 5, 100);
+            var pedidoItem = new PedidoItem(Guid.NewGuid(), "ProdutoTeste", 5, 100);
 
             // Act
             pedido.AdicionarItem(pedidoItem);
