@@ -2,6 +2,15 @@
 
 namespace NerdStore.Vendas.Domain
 {
+    public class Pedido
+    {
+        public decimal ValorTotal { get; set; }
+
+        public void AdicionarItem(PedidoItem pedidoItem)
+        {
+
+        }
+    }
 
     public class PedidoItem
     {
