@@ -1,14 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NerdStore.Vendas.Domain
 {
     public class Pedido
     {
-        public decimal ValorTotal { get; set; }
+        public Pedido()
+        {
+            _pedidoItens = new List<PedidoItem>();
+        }
+
+        private readonly List<PedidoItem> _pedidoItens;
+
+        public decimal ValorTotal { get; private set; }
+        public IReadOnlyCollection<PedidoItem> PedidoItens => _pedidoItens;
 
         public void AdicionarItem(PedidoItem pedidoItem)
         {
-            ValorTotal = pedidoItem.ValorUnitario * pedidoItem.Quantidade;
+            _pedidoItens.Add(pedidoItem);
+            ValorTotal = PedidoItens.Sum(i => i.Quantidade * i.ValorUnitario);
         }
     }
 
@@ -22,9 +33,9 @@ namespace NerdStore.Vendas.Domain
             ValorUnitario = valorUnitario;
         }
 
-        public Guid ProdutoId { get; set; }
-        public string ProdutoNome { get; set; }
-        public int Quantidade { get; set; }
-        public decimal ValorUnitario { get; set; }
+        public Guid ProdutoId { get; private set; }
+        public string ProdutoNome { get; private set; }
+        public int Quantidade { get; private set; }
+        public decimal ValorUnitario { get; private set; }
     }
 }
