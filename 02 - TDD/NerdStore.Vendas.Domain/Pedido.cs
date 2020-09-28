@@ -8,7 +8,7 @@ namespace NerdStore.Vendas.Domain
 
         public void AdicionarItem(PedidoItem pedidoItem)
         {
-
+            ValorTotal = pedidoItem.ValorUnitario * pedidoItem.Quantidade;
         }
     }
 
