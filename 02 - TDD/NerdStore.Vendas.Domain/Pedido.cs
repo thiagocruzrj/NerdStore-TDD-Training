@@ -18,6 +18,16 @@ namespace NerdStore.Vendas.Domain
 
         public void AdicionarItem(PedidoItem pedidoItem)
         {
+            if(_pedidoItens.Any(p => p.ProdutoId == pedidoItem.ProdutoId))
+            {
+                var itemExistente = _pedidoItens.FirstOrDefault(p => p.ProdutoId == pedidoItem.ProdutoId);
+                itemExistente.AdicionarUnidades(pedidoItem.Quantidade);
+
+                pedidoItem = itemExistente;
+
+                _pedidoItens.Remove(itemExistente);
+            }
+
             _pedidoItens.Add(pedidoItem);
             ValorTotal = PedidoItens.Sum(i => i.Quantidade * i.ValorUnitario);
         }
@@ -37,5 +47,10 @@ namespace NerdStore.Vendas.Domain
         public string ProdutoNome { get; private set; }
         public int Quantidade { get; private set; }
         public decimal ValorUnitario { get; private set; }
+
+        internal void AdicionarUnidades(int unidades)
+        {
+            Quantidade += unidades;
+        }
     }
 }
