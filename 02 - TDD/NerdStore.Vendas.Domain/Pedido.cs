@@ -31,6 +31,7 @@ namespace NerdStore.Vendas.Domain
             }
 
             _pedidoItens.Add(pedidoItem);
+            CalcularValorPedido();
         }
 
         public void CalcularValorPedido()

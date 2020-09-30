@@ -11,7 +11,7 @@ namespace NerdStore.Vendas.Domain.Tests
         public void AdicionarItemPedido_NovoPedido_DeveAtualizarValor()
         {
             // Arrange
-            var pedido = new Pedido();
+            var pedido = Pedido.PedidoFactory.NovoPedidoRascunho(Guid.NewGuid());
             var pedidoItem = new PedidoItem(Guid.NewGuid(), "ProdutoTeste", 5, 100);
 
             // Act
@@ -26,7 +26,7 @@ namespace NerdStore.Vendas.Domain.Tests
         public void AdicionarItemPedido_ItemExistente_DeveIncrementarUnidadesSomarValores()
         {
             // Arrange
-            var pedido = new Pedido();
+            var pedido = Pedido.PedidoFactory.NovoPedidoRascunho(Guid.NewGuid());
             var pedidoId = Guid.NewGuid();
             var pedidoItem = new PedidoItem(pedidoId, "ProdutoTeste", 5, 100);
             pedido.AdicionarItem(pedidoItem);
