@@ -6,7 +6,7 @@ namespace NerdStore.Vendas.Domain
 {
     public class Pedido
     {
-        public Pedido()
+        protected Pedido()
         {
             _pedidoItens = new List<PedidoItem>();
         }
@@ -40,6 +40,21 @@ namespace NerdStore.Vendas.Domain
         public void TornarRascunho()
         {
             PedidoStatus = PedidoStatus.Rascunho;
+        }
+
+        public static class PedidoFactory
+        {
+            public static Pedido NovoPedidoRascunho(Guid clienteId)
+            {
+                var pedido = new Pedido
+                {
+                    ClienteId = clienteId
+                };
+
+                pedido.TornarRascunho();
+
+                return pedido;
+            }
         }
     }
 
