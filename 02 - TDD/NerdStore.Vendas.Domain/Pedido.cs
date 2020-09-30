@@ -13,6 +13,7 @@ namespace NerdStore.Vendas.Domain
 
         private readonly List<PedidoItem> _pedidoItens;
 
+        public Guid ClienteId { get; private set; }
         public decimal ValorTotal { get; private set; }
         public PedidoStatus PedidoStatus { get; private set; }
         public IReadOnlyCollection<PedidoItem> PedidoItens => _pedidoItens;
@@ -52,7 +53,6 @@ namespace NerdStore.Vendas.Domain
                 };
 
                 pedido.TornarRascunho();
-
                 return pedido;
             }
         }
