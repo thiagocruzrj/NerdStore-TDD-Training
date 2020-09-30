@@ -29,7 +29,12 @@ namespace NerdStore.Vendas.Domain
             }
 
             _pedidoItens.Add(pedidoItem);
-            ValorTotal = PedidoItens.Sum(i => i.Quantidade * i.ValorUnitario);
+            CalcularValorPedido();
+        }
+
+        public void CalcularValorPedido()
+        {
+            ValorTotal = PedidoItens.Sum(i => i.CalcularValor());
         }
     }
 
@@ -51,6 +56,11 @@ namespace NerdStore.Vendas.Domain
         internal void AdicionarUnidades(int unidades)
         {
             Quantidade += unidades;
+        }
+
+        internal decimal CalcularValor()
+        {
+            return ValorUnitario * Quantidade;
         }
     }
 }
