@@ -14,6 +14,7 @@ namespace NerdStore.Vendas.Domain
         private readonly List<PedidoItem> _pedidoItens;
 
         public decimal ValorTotal { get; private set; }
+        public PedidoStatus PedidoStatus { get; private set; }
         public IReadOnlyCollection<PedidoItem> PedidoItens => _pedidoItens;
 
         public void AdicionarItem(PedidoItem pedidoItem)
@@ -34,6 +35,11 @@ namespace NerdStore.Vendas.Domain
         public void CalcularValorPedido()
         {
             ValorTotal = PedidoItens.Sum(i => i.CalcularValor());
+        }
+
+        public void TornarRascunho()
+        {
+            PedidoStatus = PedidoStatus.Rascunho;
         }
     }
 
