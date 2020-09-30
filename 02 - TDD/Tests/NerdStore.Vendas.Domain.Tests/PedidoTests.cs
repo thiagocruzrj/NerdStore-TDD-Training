@@ -31,6 +31,9 @@ namespace NerdStore.Vendas.Domain.Tests
             var pedidoItem = new PedidoItem(pedidoId, "ProdutoTeste", 5, 100);
             pedido.AdicionarItem(pedidoItem);
             var pedidoItem2 = new PedidoItem(pedidoId, "ProdutoTeste", 5, 100);
+
+            // Act
+            pedido.AdicionarItem(pedidoItem2);
         }
     }
 }
