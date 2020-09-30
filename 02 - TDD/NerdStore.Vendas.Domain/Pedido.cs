@@ -29,13 +29,21 @@ namespace NerdStore.Vendas.Domain
             }
 
             _pedidoItens.Add(pedidoItem);
-            CalcularValorPedido();
         }
 
         public void CalcularValorPedido()
         {
             ValorTotal = PedidoItens.Sum(i => i.CalcularValor());
         }
+    }
+
+    public enum PedidoStatus
+    {
+        Rascunho = 0,
+        Iniciado = 1,
+        Pago = 4,
+        Entregue = 5,
+        Cancelado = 6
     }
 
     public class PedidoItem
