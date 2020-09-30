@@ -34,6 +34,11 @@ namespace NerdStore.Vendas.Domain.Tests
 
             // Act
             pedido.AdicionarItem(pedidoItem2);
+
+            // Assert
+            Assert.Equal(1000, pedido.ValorTotal);
+            Assert.Equal(1, pedido.PedidoItens.Count);
+            Assert.Equal(10, pedido.PedidoItens.FirstOrDefault(p => p.ProdutoId == pedidoId).Quantidade);
         }
     }
 }
