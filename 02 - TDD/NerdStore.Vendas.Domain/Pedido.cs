@@ -52,7 +52,7 @@ namespace NerdStore.Vendas.Domain
 
         public void RemoverItem(PedidoItem pedidoItem)
         {
-
+            ValidarPedidoItemInexistente(pedidoItem);
         }
 
         private void ValidarPedidoItemInexistente(PedidoItem pedidoItem)
