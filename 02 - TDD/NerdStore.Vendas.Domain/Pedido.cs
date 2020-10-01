@@ -20,6 +20,9 @@ namespace NerdStore.Vendas.Domain
 
         public void AdicionarItem(PedidoItem pedidoItem)
         {
+            if(pedidoItem.Quantidade > 15)
+                throw new DomainException();
+
             if(_pedidoItens.Any(p => p.ProdutoId == pedidoItem.ProdutoId))
             {
                 var itemExistente = _pedidoItens.FirstOrDefault(p => p.ProdutoId == pedidoItem.ProdutoId);
