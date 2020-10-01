@@ -8,6 +8,7 @@ namespace NerdStore.Vendas.Domain
     public class Pedido
     {
         public static int MAX_UNIDADES_ITEM => 15;
+        public static int MIN_UNIDADES_ITEM => 1;
 
         protected Pedido()
         {
@@ -24,9 +25,12 @@ namespace NerdStore.Vendas.Domain
         public void AdicionarItem(PedidoItem pedidoItem)
         {
             if(pedidoItem.Quantidade > MAX_UNIDADES_ITEM)
-                throw new DomainException($"Limite de {MAX_UNIDADES_ITEM} itens excedido.");
+                throw new DomainException($"Limite maximo de {MAX_UNIDADES_ITEM} itens excedido.");
 
-            if(_pedidoItens.Any(p => p.ProdutoId == pedidoItem.ProdutoId))
+            if (pedidoItem.Quantidade < MIN_UNIDADES_ITEM)
+                throw new DomainException($"Limite minimo de {MIN_UNIDADES_ITEM} itens excedido.");
+
+            if (_pedidoItens.Any(p => p.ProdutoId == pedidoItem.ProdutoId))
             {
                 var itemExistente = _pedidoItens.FirstOrDefault(p => p.ProdutoId == pedidoItem.ProdutoId);
                 itemExistente.AdicionarUnidades(pedidoItem.Quantidade);
