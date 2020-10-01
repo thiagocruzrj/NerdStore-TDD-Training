@@ -41,7 +41,7 @@ namespace NerdStore.Vendas.Domain
 
         public void AtualizarItem(PedidoItem pedidoItem)
         {
-
+            if (!PedidoItemExistente(pedidoItem)) throw new DomainException("Item não existe pedido");
         }
 
         private void ValidarQuantidadeItemPermitida(PedidoItem pedidoItem)
