@@ -50,6 +50,11 @@ namespace NerdStore.Vendas.Domain
             CalcularValorPedido();
         }
 
+        public void RemoverItem(PedidoItem pedidoItem)
+        {
+
+        }
+
         private void ValidarPedidoItemInexistente(PedidoItem pedidoItem)
         {
             if (!PedidoItemExistente(pedidoItem)) throw new DomainException("Item não existe pedido");
