@@ -102,7 +102,7 @@ namespace NerdStore.Vendas.Domain.Tests
 
             var pedidoItemAtualizado = new PedidoItem(produtoId, "Produto teste", 2, 100);
             var totalPedido = pedidoItemExistente1.Quantidade * pedidoItemExistente1.ValorUnitario +
-                              pedidoItemExistente2.Quantidade * pedidoItemExistente2.ValorUnitario;
+                              pedidoItemAtualizado.Quantidade * pedidoItemAtualizado.ValorUnitario;
 
             // Act
             pedido.AtualizarItem(pedidoItemAtualizado);
