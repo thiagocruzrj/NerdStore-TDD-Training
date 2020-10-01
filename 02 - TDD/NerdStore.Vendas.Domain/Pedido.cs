@@ -7,7 +7,7 @@ namespace NerdStore.Vendas.Domain
 {
     public class Pedido
     {
-        public int MAX_UNIDADES_ITEM => 15;
+        public static int MAX_UNIDADES_ITEM => 15;
 
         protected Pedido()
         {
@@ -24,7 +24,7 @@ namespace NerdStore.Vendas.Domain
         public void AdicionarItem(PedidoItem pedidoItem)
         {
             if(pedidoItem.Quantidade > MAX_UNIDADES_ITEM)
-                throw new DomainException("Limite de 15 itens excedido.");
+                throw new DomainException($"Limite de {MAX_UNIDADES_ITEM} itens excedido.");
 
             if(_pedidoItens.Any(p => p.ProdutoId == pedidoItem.ProdutoId))
             {
