@@ -48,14 +48,11 @@ namespace NerdStore.Vendas.Domain.Tests
             // Arrange
             var pedido = Pedido.PedidoFactory.NovoPedidoRascunho(Guid.NewGuid());
             var pedidoId = Guid.NewGuid();
-            var pedidoItem = new PedidoItem(pedidoId, "ProdutoTeste", 5, 100);
+            var pedidoItem = new PedidoItem(pedidoId, "ProdutoTeste", 16, 100);
+
+            // Act & Assert
             pedido.AdicionarItem(pedidoItem);
-            var pedidoItem2 = new PedidoItem(pedidoId, "ProdutoTeste", 11, 100);
-
-            // Act
-
-            // Assert
-
+            Assert.Throws<DomainException>(() => pedido.AdicionarItem(pedidoItem));
         }
     }
 }
