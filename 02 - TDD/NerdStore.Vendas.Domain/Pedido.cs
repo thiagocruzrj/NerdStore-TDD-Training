@@ -24,7 +24,7 @@ namespace NerdStore.Vendas.Domain
 
         public void AdicionarItem(PedidoItem pedidoItem)
         {
-            if (_pedidoItens.Any(p => p.ProdutoId == pedidoItem.ProdutoId))
+            if (PedidoItemExistente(pedidoItem))
             {
                 var quantidadeItens = pedidoItem.Quantidade;
                 var itemExistente = _pedidoItens.FirstOrDefault(p => p.ProdutoId == pedidoItem.ProdutoId);
@@ -40,6 +40,11 @@ namespace NerdStore.Vendas.Domain
 
             _pedidoItens.Add(pedidoItem);
             CalcularValorPedido();
+        }
+
+        private bool PedidoItemExistente(PedidoItem pedidoItem)
+        {
+            return _pedidoItens.Any(p => p.ProdutoId == pedidoItem.ProdutoId)
         }
 
         private void CalcularValorPedido()
