@@ -56,5 +56,17 @@ namespace NerdStore.Vendas.Domain.Tests
             // Act & Assert
             Assert.Throws<DomainException>(() => pedido.AdicionarItem(pedidoItem2));
         }
+
+        [Fact(DisplayName = "Atualiz Item Pedido Inexistente")]
+        [Trait("Categoria", "Vendas - Pedido")]
+        public void AtualizarItemPedido_ItemNaoExisteNaLista_DeveRetornarException()
+        {
+            // Arrange
+
+            // Act
+
+            // Assert
+
+        }
     }
 }
