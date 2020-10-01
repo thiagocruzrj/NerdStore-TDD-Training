@@ -151,5 +151,26 @@ namespace NerdStore.Vendas.Domain.Tests
             // Act & Assert
             Assert.Throws<DomainException>(() => pedido.RemoverItem(pedidoItemRemover));
         }
+
+        [Fact(DisplayName = "Remover Item Pedido deve calcular valor total")]
+        [Trait("Categoria", "Vendas - Pedido")]
+        public void RemoverItemPedido_ItemExistente_DeveAtualizarValorTotal()
+        {
+            // Arrange
+            var pedido = Pedido.PedidoFactory.NovoPedidoRascunho(Guid.NewGuid());
+            var pedidoId = Guid.NewGuid();
+            var pedidoItem1 = new PedidoItem(Guid.NewGuid(), "Produto xpto", 3, 15);
+            var pedidoItem2 = new PedidoItem(pedidoId, "Produto Teste", 7, 15);
+            pedido.AdicionarItem(pedidoItem1);
+            pedido.AdicionarItem(pedidoItem2);
+
+            var totalPedido = pedidoItem2.Quantidade * pedidoItem2.ValorUnitario;
+
+            // Act
+            pedido.RemoverItem(pedidoItem1);
+
+            // Act & Assert
+            Assert.Equal(totalPedido, pedido.ValorTotal);
+        }
     }
 }
