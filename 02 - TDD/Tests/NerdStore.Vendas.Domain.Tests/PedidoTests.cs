@@ -40,5 +40,22 @@ namespace NerdStore.Vendas.Domain.Tests
             Assert.Equal(1, pedido.PedidoItens.Count);
             Assert.Equal(10, pedido.PedidoItens.FirstOrDefault(p => p.ProdutoId == pedidoId).Quantidade);
         }
+
+        [Fact(DisplayName = "Adicionar Item Pedido acima de 15")]
+        [Trait("Categoria", "Pedido Tests")]
+        public void AdicionarItemPedido_ItemAcimaDe15Unidades_DeveRetornarException()
+        {
+            // Arrange
+            var pedido = Pedido.PedidoFactory.NovoPedidoRascunho(Guid.NewGuid());
+            var pedidoId = Guid.NewGuid();
+            var pedidoItem = new PedidoItem(pedidoId, "ProdutoTeste", 5, 100);
+            pedido.AdicionarItem(pedidoItem);
+            var pedidoItem2 = new PedidoItem(pedidoId, "ProdutoTeste", 11, 100);
+
+            // Act
+
+            // Assert
+
+        }
     }
 }
