@@ -24,13 +24,10 @@ namespace NerdStore.Vendas.Domain
 
         public void AdicionarItem(PedidoItem pedidoItem)
         {
+            ValidarQuantidadeItemPermitida(pedidoItem);
             if (PedidoItemExistente(pedidoItem))
             {
-                var quantidadeItens = pedidoItem.Quantidade;
                 var itemExistente = _pedidoItens.FirstOrDefault(p => p.ProdutoId == pedidoItem.ProdutoId);
-
-                if(quantidadeItens + itemExistente.Quantidade > MAX_UNIDADES_ITEM)
-                    throw new DomainException($"Limite maximo de {Pedido.MAX_UNIDADES_ITEM} itens excedido.");
 
                 itemExistente.AdicionarUnidades(pedidoItem.Quantidade);
                 pedidoItem = itemExistente;
@@ -42,9 +39,22 @@ namespace NerdStore.Vendas.Domain
             CalcularValorPedido();
         }
 
+        private void ValidarQuantidadeItemPermitida(PedidoItem pedidoItem)
+        {
+            var quantidadeItens = pedidoItem.Quantidade;
+            if(PedidoItemExistente(pedidoItem))
+            {
+                var itemExistente = _pedidoItens.FirstOrDefault(p => p.ProdutoId == pedidoItem.ProdutoId);
+                quantidadeItens += pedidoItem.Quantidade;
+            }
+
+            if (quantidadeItens > MAX_UNIDADES_ITEM)
+                throw new DomainException($"Limite maximo de {MAX_UNIDADES_ITEM} itens excedido.");
+        }
+
         private bool PedidoItemExistente(PedidoItem pedidoItem)
         {
-            return _pedidoItens.Any(p => p.ProdutoId == pedidoItem.ProdutoId)
+            return _pedidoItens.Any(p => p.ProdutoId == pedidoItem.ProdutoId);
         }
 
         private void CalcularValorPedido()
