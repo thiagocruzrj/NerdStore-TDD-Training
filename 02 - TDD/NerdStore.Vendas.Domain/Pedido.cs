@@ -39,6 +39,11 @@ namespace NerdStore.Vendas.Domain
             CalcularValorPedido();
         }
 
+        public void AtualizarItem(PedidoItem pedidoItem)
+        {
+
+        }
+
         private void ValidarQuantidadeItemPermitida(PedidoItem pedidoItem)
         {
             var quantidadeItens = pedidoItem.Quantidade;
