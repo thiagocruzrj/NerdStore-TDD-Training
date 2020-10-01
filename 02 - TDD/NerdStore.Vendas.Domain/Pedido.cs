@@ -26,9 +26,13 @@ namespace NerdStore.Vendas.Domain
         {
             if (_pedidoItens.Any(p => p.ProdutoId == pedidoItem.ProdutoId))
             {
+                var quantidadeItens = pedidoItem.Quantidade;
                 var itemExistente = _pedidoItens.FirstOrDefault(p => p.ProdutoId == pedidoItem.ProdutoId);
-                itemExistente.AdicionarUnidades(pedidoItem.Quantidade);
 
+                if(quantidadeItens + itemExistente.Quantidade > MAX_UNIDADES_ITEM)
+                    throw new DomainException($"Limite maximo de {Pedido.MAX_UNIDADES_ITEM} itens excedido.");
+
+                itemExistente.AdicionarUnidades(pedidoItem.Quantidade);
                 pedidoItem = itemExistente;
 
                 _pedidoItens.Remove(itemExistente);
