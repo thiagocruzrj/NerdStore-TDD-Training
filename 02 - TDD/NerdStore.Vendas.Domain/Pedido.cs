@@ -6,6 +6,8 @@ namespace NerdStore.Vendas.Domain
 {
     public class Pedido
     {
+        public int MAX_UNIDADES_ITEM => 15;
+
         protected Pedido()
         {
             _pedidoItens = new List<PedidoItem>();
@@ -20,8 +22,8 @@ namespace NerdStore.Vendas.Domain
 
         public void AdicionarItem(PedidoItem pedidoItem)
         {
-            if(pedidoItem.Quantidade > 15)
-                throw new DomainException();
+            if(pedidoItem.Quantidade > MAX_UNIDADES_ITEM)
+                throw new DomainException("Limite de 15 itens excedido.");
 
             if(_pedidoItens.Any(p => p.ProdutoId == pedidoItem.ProdutoId))
             {
@@ -37,7 +39,7 @@ namespace NerdStore.Vendas.Domain
             CalcularValorPedido();
         }
 
-        public void CalcularValorPedido()
+        private void CalcularValorPedido()
         {
             ValorTotal = PedidoItens.Sum(i => i.CalcularValor());
         }
@@ -97,5 +99,10 @@ namespace NerdStore.Vendas.Domain
         }
     }
 
-    public class DomainException : Exception { }
+    public class DomainException : Exception 
+    {
+        public DomainException() { }
+        public DomainException(string message) : base(message) { }
+        public DomainException(string message, Exception innerException) : base (message, innerException) { }
+    }
 }
