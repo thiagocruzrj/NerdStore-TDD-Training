@@ -7,7 +7,7 @@ namespace NerdStore.Vendas.Domain.Tests
     public class PedidoItemTests
     {
         [Fact(DisplayName = "Novo Item Pedido com unidades acima do permitido")]
-        [Trait("Categoria", "Item Pedido Tests")]
+        [Trait("Categoria", "Vendas - Pedido Item")]
         public void AdicionarItemPedido_ItemAcimaDoPermitido_DeveRetornarException()
         {
             // Arrange Act & Assert
@@ -15,7 +15,7 @@ namespace NerdStore.Vendas.Domain.Tests
         }
 
         [Fact(DisplayName = "Novo Item Pedido com unidades abaixo do permitido")]
-        [Trait("Categoria", "Item Pedido Tests")]
+        [Trait("Categoria", "Vendas - Pedido Item")]
         public void AdicionarItemPedido_ItemAbaixoDoPermitido_DeveRetornarException()
         {
             // Arrange, Act & Assert
