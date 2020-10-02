@@ -21,6 +21,9 @@ namespace NerdStore.Vendas.Domain
         public Guid ClienteId { get; private set; }
         public decimal ValorTotal { get; private set; }
         public PedidoStatus PedidoStatus { get; private set; }
+        public Voucher Voucher { get; private set; }
+        public bool VoucherUtilizado { get; set; }
+
         public IReadOnlyCollection<PedidoItem> PedidoItens => _pedidoItens;
 
         public void AdicionarItem(PedidoItem pedidoItem)
@@ -61,7 +64,15 @@ namespace NerdStore.Vendas.Domain
 
         public ValidationResult AplicarVoucher(Voucher voucher)
         {
-            return voucher.ValidarSeAplicavel();
+            var result = voucher.ValidarSeAplicavel();
+
+            if (result.IsValid != true)
+                return result;
+
+            Voucher = voucher;
+            VoucherUtilizado = true;
+
+            return result;
         }
 
         private void ValidarPedidoItemInexistente(PedidoItem pedidoItem)
