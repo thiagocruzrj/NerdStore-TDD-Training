@@ -18,5 +18,10 @@ namespace NerdStore.Vendas.Application.Commands
         public string Nome { get; set; }
         public int Quantidade { get; set; }
         public decimal ValorUnitario { get; set; }
+
+        public bool EhValido()
+        {
+            return true;
+        }
     }
 }

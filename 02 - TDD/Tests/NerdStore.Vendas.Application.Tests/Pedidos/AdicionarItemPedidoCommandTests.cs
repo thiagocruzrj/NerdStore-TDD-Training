@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NerdStore.Vendas.Application.Commands;
+using System;
 using Xunit;
 
 namespace NerdStore.Vendas.Application.Tests.Pedidos
