@@ -216,13 +216,13 @@ namespace NerdStore.Vendas.Domain.Tests
 
             var voucher = new Voucher("PROMO-15-REAIS", null, 15, TipoDescontoVoucher.Valor, 1, DateTime.Now.AddDays(-1), true, false);
 
-            var valorDescont = pedido.ValorTotal - voucher.ValorDesconto;
+            var valorDesconto = pedido.ValorTotal - voucher.ValorDesconto;
 
             // Act
             pedido.AplicarVoucher(voucher);
 
             // Assert
-            Assert.Equal(valorDescont, pedido.ValorTotal);
+            Assert.Equal(valorDesconto, pedido.ValorTotal);
         }
     }
 }
