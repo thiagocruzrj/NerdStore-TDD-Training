@@ -132,6 +132,7 @@ namespace NerdStore.Vendas.Domain
         private void CalcularValorPedido()
         {
             ValorTotal = PedidoItens.Sum(i => i.CalcularValor());
+            CalcularValorTotalDesconto();
         }
 
         public void TornarRascunho()
