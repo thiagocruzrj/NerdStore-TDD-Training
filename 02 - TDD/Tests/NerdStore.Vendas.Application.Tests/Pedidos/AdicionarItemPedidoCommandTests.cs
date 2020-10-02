@@ -1,5 +1,6 @@
 ﻿using NerdStore.Vendas.Application.Commands;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace NerdStore.Vendas.Application.Tests.Pedidos
@@ -32,6 +33,11 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
 
             // Assert
             Assert.False(result);
+            Assert.Contains(AdicionarItemPedidoValidation.IdClienteErroMsg, command.ValidationResult.Errors.Select(c => c.ErrorMessage));
+            Assert.Contains(AdicionarItemPedidoValidation.IdProdutoErroMsg, command.ValidationResult.Errors.Select(c => c.ErrorMessage));
+            Assert.Contains(AdicionarItemPedidoValidation.NomeErroMsg, command.ValidationResult.Errors.Select(c => c.ErrorMessage));
+            Assert.Contains(AdicionarItemPedidoValidation.QtdMinErroMsg, command.ValidationResult.Errors.Select(c => c.ErrorMessage));
+            Assert.Contains(AdicionarItemPedidoValidation.ValorErroMsg, command.ValidationResult.Errors.Select(c => c.ErrorMessage));
         }
     }
 }
