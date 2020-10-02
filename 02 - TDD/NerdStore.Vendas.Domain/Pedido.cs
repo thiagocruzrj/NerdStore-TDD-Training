@@ -88,6 +88,13 @@ namespace NerdStore.Vendas.Domain
                     ValorTotal -= Voucher.ValorDesconto.Value;
                 }
             }
+            else
+            {
+                if (Voucher.PercentualDesconto.HasValue)
+                {
+                    ValorTotal -= (ValorTotal * Voucher.PercentualDesconto.Value)/ 100;
+                }
+            }
         }
 
         private void ValidarPedidoItemInexistente(PedidoItem pedidoItem)
