@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentValidation;
+using System;
 
 namespace NerdStore.Vendas.Domain
 {
@@ -29,6 +30,17 @@ namespace NerdStore.Vendas.Domain
         {
             return true;
         }
+    }
+
+    public class VoucherAplicavelValidation : AbstractValidator<Voucher>
+    {
+        public static string CodigoErroMsg => "Voucher sem código válido";
+        public static string DataValidadeErrorMsg => "Este voucher está expirado";
+        public static string AtivoErroMsg => "Esse voucher não é mais válido";
+        public static string UtilizadoErroMsg => "Esse voucher já foi utilizado";
+        public static string QuantidadeErroMsg => "Voucher não está mais disponivel";
+        public static string ValorDescontoErroMsg => "O valor do desconto precisa ser superior a 0";
+        public static string PercentualErroMsg => "O valor da porcentagem precisa ser superior a 0";
     }
 
     public enum TipoDescontoVoucher
