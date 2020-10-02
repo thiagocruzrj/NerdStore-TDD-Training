@@ -100,6 +100,8 @@ namespace NerdStore.Vendas.Domain
             }
 
             ValorTotal -= desconto;
+
+            if (ValorTotal < 0) ValorTotal = 0;
             Desconto = desconto;
         }
 
