@@ -214,15 +214,15 @@ namespace NerdStore.Vendas.Domain.Tests
             pedido.AdicionarItem(pedidoItem1);
             pedido.AdicionarItem(pedidoItem2);
 
-            var voucher = new Voucher("PROMO-15-REAIS", null, 15, TipoDescontoVoucher.Valor, 1, DateTime.Now.AddDays(-1), true, false);
+            var voucher = new Voucher("PROMO-15-REAIS", null, 15, TipoDescontoVoucher.Valor, 1, DateTime.Now.AddDays(15), true, false);
 
-            var valorDesconto = pedido.ValorTotal - voucher.ValorDesconto;
+            var valorComDesconto = pedido.ValorTotal - voucher.ValorDesconto;
 
             // Act
             pedido.AplicarVoucher(voucher);
 
             // Assert
-            Assert.Equal(valorDesconto, pedido.ValorTotal);
+            Assert.Equal(valorComDesconto, pedido.ValorTotal);
         }
     }
 }

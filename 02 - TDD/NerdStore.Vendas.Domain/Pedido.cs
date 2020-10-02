@@ -72,9 +72,22 @@ namespace NerdStore.Vendas.Domain
             Voucher = voucher;
             VoucherUtilizado = true;
 
-            ValorTotal -= voucher.ValorDesconto.Value;
+            CalcularValorTotalDesconto();
 
             return result;
+        }
+
+        public void CalcularValorTotalDesconto()
+        {
+            if (!VoucherUtilizado) return;
+
+            if (Voucher.TipoDescontoVoucher == TipoDescontoVoucher.Valor)
+            {
+                if (Voucher.ValorDesconto.HasValue)
+                {
+                    ValorTotal -= Voucher.ValorDesconto.Value;
+                }
+            }
         }
 
         private void ValidarPedidoItemInexistente(PedidoItem pedidoItem)
