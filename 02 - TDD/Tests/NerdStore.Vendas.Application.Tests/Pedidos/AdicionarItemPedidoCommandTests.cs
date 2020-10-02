@@ -1,4 +1,5 @@
 ﻿using NerdStore.Vendas.Application.Commands;
+using NerdStore.Vendas.Domain;
 using System;
 using System.Linq;
 using Xunit;
@@ -38,6 +39,21 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
             Assert.Contains(AdicionarItemPedidoValidation.NomeErroMsg, command.ValidationResult.Errors.Select(c => c.ErrorMessage));
             Assert.Contains(AdicionarItemPedidoValidation.QtdMinErroMsg, command.ValidationResult.Errors.Select(c => c.ErrorMessage));
             Assert.Contains(AdicionarItemPedidoValidation.ValorErroMsg, command.ValidationResult.Errors.Select(c => c.ErrorMessage));
+        }
+
+        [Fact(DisplayName = "Adicionar Item Command unidades acima do permitido")]
+        [Trait("Categoria", "Vendas - Pedido Commands")]
+        public void AdicionarItemPedidoCommand_CommandoUnidadesSuperiorAoPermitido_NaoDevePassarNaValidacao()
+        {
+            // Arrange
+            var command = new AdicionarItemPedidoCommand(Guid.NewGuid(), Guid.NewGuid(), "ProdutoTeste", Pedido.MAX_UNIDADES_ITEM, 100);
+
+            // Act
+            var result = command.EhValido();
+
+            // Assert
+            Assert.False(result);
+            Assert.Contains(AdicionarItemPedidoValidation.QtdMaxErroMsg, command.ValidationResult.Errors.Select(c => c.ErrorMessage));
         }
     }
 }
