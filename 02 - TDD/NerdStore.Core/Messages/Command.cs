@@ -12,5 +12,7 @@ namespace NerdStore.Core.Messages
         {
             TimesStamp = DateTime.Now;
         }
+
+        public abstract bool EhValido();
     }
 }

@@ -22,7 +22,7 @@ namespace NerdStore.Vendas.Application.Commands
         public int Quantidade { get; set; }
         public decimal ValorUnitario { get; set; }
 
-        public bool EhValido()
+        public override bool EhValido()
         {
             ValidationResult =  new AdicionarItemPedidoValidation().Validate(this);
             return ValidationResult.IsValid;
