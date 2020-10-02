@@ -10,22 +10,13 @@ namespace NerdStore.Vendas.Domain.Tests
         public void Voucher_ValidarTipoValorVoucher_DeveEstarValido()
         {
             // Arrange
-            var voucher = new Voucher
-            {
-                Codigo = "PROMO-15-REAIS",
-                ValorDesconto = 15,
-                PercentualDesconto = null,
-                Quantidade = 1,
-                DataValidade = DateTime.Now,
-                Ativo = true,
-                Utilizado = false
-            };
+            var voucher = new Voucher("PROMO-15-REAIS", null, 15, TipoDescontoVoucher.Valor, 1, DateTime.Now.AddDays(15), true, false);
 
             // Act
             var result = voucher.ValidarSeAplicavel();
 
             // Assert
-            Assert.True(result);
+            Assert.True(result.IsValid);
         }
     }
 }
