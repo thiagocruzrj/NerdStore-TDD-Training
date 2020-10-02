@@ -172,5 +172,12 @@ namespace NerdStore.Vendas.Domain.Tests
             // Act & Assert
             Assert.Equal(totalPedido, pedido.ValorTotal);
         }
+
+        [Fact(DisplayName = "Aplicar Voucher Valido")]
+        [Trait("Categoria", "Vendas - Pedido")]
+        public void Pedido_AplicarVoucherValido_DeveRetornarSemErros()
+        {
+
+        }
     }
 }
