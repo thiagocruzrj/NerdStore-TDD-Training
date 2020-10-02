@@ -175,7 +175,7 @@ namespace NerdStore.Vendas.Domain.Tests
 
         [Fact(DisplayName = "Aplicar Voucher Valido")]
         [Trait("Categoria", "Vendas - Pedido")]
-        public void Pedido_AplicarVoucherValido_DeveRetornarSemErros()
+        public void AplicarVoucher_VoucherValido_DeveRetornarSemErros()
         {
             // Arrange
             var pedido = Pedido.PedidoFactory.NovoPedidoRascunho(Guid.NewGuid());
@@ -190,7 +190,7 @@ namespace NerdStore.Vendas.Domain.Tests
 
         [Fact(DisplayName = "Aplicar Voucher Invalido")]
         [Trait("Categoria", "Vendas - Pedido")]
-        public void Pedido_AplicarVoucherInvalido_DeveRetornarComErros()
+        public void AplicarVoucher_VoucherInvalido_DeveRetornarComErros()
         {
             // Arrange
             var pedido = Pedido.PedidoFactory.NovoPedidoRascunho(Guid.NewGuid());
@@ -205,7 +205,7 @@ namespace NerdStore.Vendas.Domain.Tests
 
         [Fact(DisplayName = "Aplicar Voucher Tipo Valor Desconto")]
         [Trait("Categoria", "Vendas - Pedido")]
-        public void Pedido_AplicarVoucherTipoValorDesconto_DeveDescontarValorTotal()
+        public void AplicarVoucher_VoucherTipoValorDesconto_DeveDescontarValorTotal()
         {
             // Arrange
             var pedido = Pedido.PedidoFactory.NovoPedidoRascunho(Guid.NewGuid());
@@ -227,7 +227,7 @@ namespace NerdStore.Vendas.Domain.Tests
 
         [Fact(DisplayName = "Aplicar Voucher Tipo Porcentagem Desconto")]
         [Trait("Categoria", "Vendas - Pedido")]
-        public void Pedido_AplicarVoucherTipoPorcentagemDesconto_DeveDescontarValorTotal()
+        public void AplicarVoucher_rVoucherTipoPorcentagemDesconto_DeveDescontarValorTotal()
         {
             // Arrange
             var pedido = Pedido.PedidoFactory.NovoPedidoRascunho(Guid.NewGuid());
@@ -250,7 +250,7 @@ namespace NerdStore.Vendas.Domain.Tests
 
         [Fact(DisplayName = "Aplicar Voucher Tipo Valor excede valor total")]
         [Trait("Categoria", "Vendas - Pedido")]
-        public void Pedido_AplicarVoucherTipoValorDesconto_PedidoDeveTerValorZero()
+        public void AplicarVoucher_VoucherTipoValorDesconto_PedidoDeveTerValorZero()
         {
             // Arrange
             var pedido = Pedido.PedidoFactory.NovoPedidoRascunho(Guid.NewGuid());
@@ -264,6 +264,29 @@ namespace NerdStore.Vendas.Domain.Tests
 
             // Assert
             Assert.Equal(0, pedido.ValorTotal);
+        }
+
+        [Fact(DisplayName = "Aplicar Voucher recalcular desconto na modificação do pedido")]
+        [Trait("Categoria", "Vendas - Pedido")]
+        public void AplicarVoucher_ModificarItensPedido_DeveCalcularDescontoValorTotal()
+        {
+            // Arrange
+            var pedido = Pedido.PedidoFactory.NovoPedidoRascunho(Guid.NewGuid());
+            var pedidoItem1 = new PedidoItem(Guid.NewGuid(), "Produto xpto", 2, 100);
+            pedido.AdicionarItem(pedidoItem1);
+
+            var voucher = new Voucher("PROMO-110-110OFF", null, 110, TipoDescontoVoucher.Valor, 1, DateTime.Now.AddDays(15), true, false);
+            pedido.AplicarVoucher(voucher);
+
+            var pedidoItem2 = new PedidoItem(Guid.NewGuid(), "Produto xpto", 2, 100);
+
+            // Act
+            pedido.AdicionarItem(pedidoItem2);
+
+            // Assert
+            var totalEsperado = pedido.PedidoItens.Sum(i => i.Quantidade * i.ValorUnitario) - voucher.ValorDesconto;
+
+            Assert.Equal(totalEsperado, pedido.ValorTotal);
         }
     }
 }
