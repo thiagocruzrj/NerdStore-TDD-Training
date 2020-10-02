@@ -224,5 +224,28 @@ namespace NerdStore.Vendas.Domain.Tests
             // Assert
             Assert.Equal(valorComDesconto, pedido.ValorTotal);
         }
+
+        [Fact(DisplayName = "Aplicar Voucher Tipo Porcentagem Desconto")]
+        [Trait("Categoria", "Vendas - Pedido")]
+        public void Pedido_AplicarVoucherTipoPorcentagemDesconto_DeveDescontarValorTotal()
+        {
+            // Arrange
+            var pedido = Pedido.PedidoFactory.NovoPedidoRascunho(Guid.NewGuid());
+            var pedidoItem1 = new PedidoItem(Guid.NewGuid(), "Produto xpto", 3, 15);
+            var pedidoItem2 = new PedidoItem(Guid.NewGuid(), "Produto Teste", 7, 15);
+            pedido.AdicionarItem(pedidoItem1);
+            pedido.AdicionarItem(pedidoItem2);
+
+            var voucher = new Voucher("PROMO-15-PORCENTO", 15, null, TipoDescontoVoucher.Porcentagem, 1, DateTime.Now.AddDays(15), true, false);
+
+            var valorDesconto = (pedido.ValorTotal * voucher.PercentualDesconto) / 100;
+            var valorComDesconto = pedido.ValorTotal - valorDesconto;
+
+            // Act
+            pedido.AplicarVoucher(voucher);
+
+            // Assert
+            Assert.Equal(valorComDesconto, pedido.ValorTotal);
+        }
     }
 }
