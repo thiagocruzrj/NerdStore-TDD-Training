@@ -83,12 +83,14 @@ namespace NerdStore.Vendas.Domain
             if (!VoucherUtilizado) return;
 
             decimal desconto = 0;
+            var valor = ValorTotal;
 
             if (Voucher.TipoDescontoVoucher == TipoDescontoVoucher.Valor)
             {
                 if (Voucher.ValorDesconto.HasValue)
                 {
                     desconto = Voucher.ValorDesconto.Value;
+                    valor -= desconto;
                 }
             }
             else
@@ -96,12 +98,11 @@ namespace NerdStore.Vendas.Domain
                 if (Voucher.PercentualDesconto.HasValue)
                 {
                     desconto = (ValorTotal * Voucher.PercentualDesconto.Value) / 100;
+                    valor -= desconto;
                 }
             }
 
-            ValorTotal -= desconto;
-
-            if (ValorTotal < 0) ValorTotal = 0;
+            ValorTotal = valor < 0 ? 0 : valor;
             Desconto = desconto;
         }
 
