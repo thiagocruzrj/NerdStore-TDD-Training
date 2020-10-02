@@ -19,9 +19,13 @@ namespace NerdStore.Vendas.Application.Commands
 
         public async Task<bool> Handle(AdicionarItemPedidoCommand message, CancellationToken cancellationToken)
         {
-            _repository.Adicionar(Pedido.PedidoFactory.NovoPedidoRascunho(message.ClienteId));
+            var pedidoItem = new PedidoItem(message.ProdutoId, message.Nome, message.Quantidade, message.ValorUnitario);
+            var pedido = Pedido.PedidoFactory.NovoPedidoRascunho(message.ClienteId);
+            pedido.AdicionarItem(pedidoItem);
 
-            await _mediator.Publish(new PedidoItemAdicionadoEvent(), cancellationToken);
+            _repository.Adicionar(pedido);
+
+            await _mediator.Publish(new PedidoItemAdicionadoEvent(message.ClienteId, pedido.Id, message.ProdutoId, message.Nome, message.ValorUnitario, message.Quantidade), cancellationToken);
             return true;
         }
     }
