@@ -1,4 +1,5 @@
-﻿using NerdStore.Core.DomainObjects;
+﻿using FluentValidation.Results;
+using NerdStore.Core.DomainObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,11 @@ namespace NerdStore.Vendas.Domain
 
             _pedidoItens.Remove(pedidoItem);
             CalcularValorPedido();
+        }
+
+        public ValidationResult AplicarVoucher(Voucher voucher)
+        {
+            return new ValidationResult();
         }
 
         private void ValidarPedidoItemInexistente(PedidoItem pedidoItem)
