@@ -11,5 +11,10 @@ namespace NerdStore.Vendas.Domain
         public DateTime DataValidade { get; set; }
         public bool Ativo { get; set; }
         public bool Utilizado { get; set; }
+
+        public bool ValidarSeAplicavel()
+        {
+            return false;
+        }
     }
 }
