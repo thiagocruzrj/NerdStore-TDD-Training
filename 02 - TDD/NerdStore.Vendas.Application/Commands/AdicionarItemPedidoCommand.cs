@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using NerdStore.Vendas.Domain;
 using System;
 
 namespace NerdStore.Vendas.Application.Commands
@@ -22,7 +23,7 @@ namespace NerdStore.Vendas.Application.Commands
 
         public bool EhValido()
         {
-            return true;
+            return new AdicionarItemPedidoValidation().Validate(this).IsValid;
         }
     }
 
@@ -59,4 +60,5 @@ namespace NerdStore.Vendas.Application.Commands
                 .GreaterThan(0)
                 .WithMessage(ValorErroMsg);
         }
+    }
 }
