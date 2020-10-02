@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
+using NerdStore.Core.Messages;
 using NerdStore.Vendas.Domain;
 using System;
 
 namespace NerdStore.Vendas.Application.Commands
 {
-    public class AdicionarItemPedidoCommand
+    public class AdicionarItemPedidoCommand : Command
     {
         public AdicionarItemPedidoCommand(Guid clienteId, Guid produtoId, string nome, int quantidade, decimal valorUnitario)
         {

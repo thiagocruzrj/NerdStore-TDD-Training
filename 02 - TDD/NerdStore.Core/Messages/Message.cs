@@ -1,5 +1,4 @@
-﻿using FluentValidation.Results;
-using System;
+﻿using System;
 
 namespace NerdStore.Core.Messages
 {
@@ -11,17 +10,6 @@ namespace NerdStore.Core.Messages
         protected Message()
         {
             MessageType = GetType().Name;
-        }
-    }
-
-    public abstract class Command : Message
-    {
-        public DateTime TimesStamp { get; private set; }
-        public ValidationResult ValidationResult { get; set; }
-
-        protected Command()
-        {
-            TimesStamp = DateTime.Now;
         }
     }
 }
