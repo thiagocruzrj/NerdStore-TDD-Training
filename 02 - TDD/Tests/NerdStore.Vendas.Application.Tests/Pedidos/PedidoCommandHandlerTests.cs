@@ -1,8 +1,10 @@
-﻿using Moq;
+﻿using MediatR;
+using Moq;
 using Moq.AutoMock;
 using NerdStore.Vendas.Application.Commands;
 using NerdStore.Vendas.Domain;
 using System;
+using System.Threading;
 using Xunit;
 
 namespace NerdStore.Vendas.Application.Tests.Pedidos
@@ -25,7 +27,7 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
             // Assert
             Assert.True(result);
             mocker.GetMock<IPedidoRepository>().Verify(r => r.Adicionar(It.IsAny<Pedido>()), Times.Once);
-            mocker.GetMock<IMediator>().Verify(r => r.Publish(It.IsAny<INotification>()), Times.Once);
+            mocker.GetMock<IMediator>().Verify(r => r.Publish(It.IsAny<INotification>(), CancellationToken.None), Times.Once);
         }
     }
 }
