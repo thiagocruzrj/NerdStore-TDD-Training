@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FluentValidation.Results;
 using System;
 
 namespace NerdStore.Vendas.Domain
@@ -26,9 +27,9 @@ namespace NerdStore.Vendas.Domain
         public bool Ativo { get; private set; }
         public bool Utilizado { get; private set; }
 
-        public bool ValidarSeAplicavel()
+        public ValidationResult ValidarSeAplicavel()
         {
-            return true;
+            return new VoucherAplicavelValidation().Validate(this);
         }
     }
 
