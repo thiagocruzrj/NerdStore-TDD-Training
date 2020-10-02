@@ -4,6 +4,18 @@ namespace NerdStore.Vendas.Domain
 {
     public class Voucher
     {
+        public Voucher(string codigo, decimal? percentualDesconto, decimal? valorDesconto, TipoDescontoVoucher tipoDescontoVoucher, int quantidade, DateTime dataValidade, bool ativo, bool utilizado)
+        {
+            Codigo = codigo;
+            PercentualDesconto = percentualDesconto;
+            ValorDesconto = valorDesconto;
+            TipoDescontoVoucher = tipoDescontoVoucher;
+            Quantidade = quantidade;
+            DataValidade = dataValidade;
+            Ativo = ativo;
+            Utilizado = utilizado;
+        }
+
         public string Codigo { get; private set; }
         public decimal? PercentualDesconto { get; private set; }
         public decimal? ValorDesconto { get; private set; }
