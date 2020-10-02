@@ -247,5 +247,25 @@ namespace NerdStore.Vendas.Domain.Tests
             // Assert
             Assert.Equal(valorComDesconto, pedido.ValorTotal);
         }
+
+        [Fact(DisplayName = "Aplicar Voucher Tipo Valor excede valor total")]
+        [Trait("Categoria", "Vendas - Pedido")]
+        public void Pedido_AplicarVoucherTipoValorDesconto_PedidoDeveTerValorZero()
+        {
+            // Arrange
+            var pedido = Pedido.PedidoFactory.NovoPedidoRascunho(Guid.NewGuid());
+            var pedidoItem1 = new PedidoItem(Guid.NewGuid(), "Produto xpto", 10, 10);
+            pedido.AdicionarItem(pedidoItem1);
+
+            var voucher = new Voucher("PROMO-110-110OFF", null, 110, TipoDescontoVoucher.Valor, 1, DateTime.Now.AddDays(15), true, false);
+
+            var valorComDesconto = pedido.ValorTotal - voucher.ValorDesconto;
+
+            // Act
+            pedido.AplicarVoucher(voucher);
+
+            // Assert
+            Assert.Equal(valorComDesconto, 0);
+        }
     }
 }
