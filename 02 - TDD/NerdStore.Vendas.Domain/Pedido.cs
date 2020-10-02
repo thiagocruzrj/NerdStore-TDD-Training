@@ -20,6 +20,7 @@ namespace NerdStore.Vendas.Domain
 
         public Guid ClienteId { get; private set; }
         public decimal ValorTotal { get; private set; }
+        public decimal Desconto { get; private set; }
         public PedidoStatus PedidoStatus { get; private set; }
         public Voucher Voucher { get; private set; }
         public bool VoucherUtilizado { get; set; }
@@ -81,20 +82,25 @@ namespace NerdStore.Vendas.Domain
         {
             if (!VoucherUtilizado) return;
 
+            decimal desconto = 0;
+
             if (Voucher.TipoDescontoVoucher == TipoDescontoVoucher.Valor)
             {
                 if (Voucher.ValorDesconto.HasValue)
                 {
-                    ValorTotal -= Voucher.ValorDesconto.Value;
+                    desconto = Voucher.ValorDesconto.Value;
                 }
             }
             else
             {
                 if (Voucher.PercentualDesconto.HasValue)
                 {
-                    ValorTotal -= (ValorTotal * Voucher.PercentualDesconto.Value)/ 100;
+                    desconto = (ValorTotal * Voucher.PercentualDesconto.Value) / 100;
                 }
             }
+
+            ValorTotal -= desconto;
+            Desconto = desconto;
         }
 
         private void ValidarPedidoItemInexistente(PedidoItem pedidoItem)
