@@ -46,7 +46,7 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
         public void AdicionarItemPedidoCommand_CommandoUnidadesSuperiorAoPermitido_NaoDevePassarNaValidacao()
         {
             // Arrange
-            var command = new AdicionarItemPedidoCommand(Guid.NewGuid(), Guid.NewGuid(), "ProdutoTeste", Pedido.MAX_UNIDADES_ITEM, 100);
+            var command = new AdicionarItemPedidoCommand(Guid.NewGuid(), Guid.NewGuid(), "ProdutoTeste", Pedido.MAX_UNIDADES_ITEM + 1, 100);
 
             // Act
             var result = command.EhValido();
