@@ -14,6 +14,8 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
     {
         private readonly Guid _clienteId;
         private readonly Guid _produtoId;
+        private readonly Pedido _pedido;
+
         private readonly AutoMocker _mocker;
         private readonly PedidoCommandHandler _pedidoHandler;
 
@@ -24,6 +26,8 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
 
             _clienteId = Guid.NewGuid();
             _produtoId = Guid.NewGuid();
+
+            _pedido = Pedido.PedidoFactory.NovoPedidoRascunho(_clienteId);
         }
 
         [Fact(DisplayName = "Adicionar Item Novo Pedido com Sucesso")]
@@ -78,14 +82,13 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
         public async Task AdicionarItem_ItemExistenteAoPedidoRascunho_DeveExecutarComSucesso()
         {
             // Arrange
-            var pedido = Pedido.PedidoFactory.NovoPedidoRascunho(_clienteId);
             var pedidoItemExistente = new PedidoItem(_produtoId, "ProdutoTeste", 2, 100);
-            pedido.AdicionarItem(pedidoItemExistente);
+            _pedido.AdicionarItem(pedidoItemExistente);
 
             var pedidoCommand = new AdicionarItemPedidoCommand(_clienteId, _produtoId, "ProdutoTeste", 2, 100);
 
             _mocker.GetMock<IPedidoRepository>().Setup(r => r.ObterPedidoRascunhoPorClienteId(_clienteId))
-                .Returns(Task.FromResult(pedido));
+                .Returns(Task.FromResult(_pedido));
 
             _mocker.GetMock<IPedidoRepository>().Setup(r => r.UnitOfWork.Commit()).Returns(Task.FromResult(true));
 
