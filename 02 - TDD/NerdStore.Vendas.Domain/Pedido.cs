@@ -124,7 +124,7 @@ namespace NerdStore.Vendas.Domain
                 throw new DomainException($"Limite maximo de {MAX_UNIDADES_ITEM} itens excedido.");
         }
 
-        private bool PedidoItemExistente(PedidoItem pedidoItem)
+        public bool PedidoItemExistente(PedidoItem pedidoItem)
         {
             return _pedidoItens.Any(p => p.ProdutoId == pedidoItem.ProdutoId);
         }
