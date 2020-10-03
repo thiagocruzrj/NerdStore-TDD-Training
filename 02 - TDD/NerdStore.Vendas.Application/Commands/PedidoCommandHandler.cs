@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using NerdStore.Core.DomainObjects;
 using NerdStore.Vendas.Application.Events;
 using NerdStore.Vendas.Domain;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace NerdStore.Vendas.Application.Commands
             {
                 foreach (var error in message.ValidationResult.Errors)
                 {
-                    _mediator.Publish(new DomainNotification(message.MessageType, error.ErrorMessage));
+                    await _mediator.Publish(new DomainNotification(message.MessageType, error.ErrorMessage));
                 }
 
                 return false;

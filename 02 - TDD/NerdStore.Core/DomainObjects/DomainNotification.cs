@@ -6,7 +6,7 @@ namespace NerdStore.Core.DomainObjects
 {
     public class DomainNotification: Message, INotification
     {
-        public DomainNotification(DateTime timestamp, Guid domainNotificationId, string key, string value, int version)
+        public DomainNotification(string key, string value)
         {
             Timestamp = DateTime.Now;
             DomainNotificationId = Guid.NewGuid();
