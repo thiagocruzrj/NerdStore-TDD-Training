@@ -27,5 +27,10 @@ namespace NerdStore.Core.DomainObjects
         {
             _notificacoes?.Remove(evento);
         }
+
+        public void LimparEventos()
+        {
+            _notificacoes?.Clear();
+        }
     }
 }
