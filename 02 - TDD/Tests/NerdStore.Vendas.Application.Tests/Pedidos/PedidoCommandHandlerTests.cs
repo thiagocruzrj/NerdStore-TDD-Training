@@ -96,5 +96,11 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
             mocker.GetMock<IPedidoRepository>().Verify(r => r.Atualizar(It.IsAny<Pedido>()), Times.Once);
             mocker.GetMock<IPedidoRepository>().Verify(r => r.UnitOfWork.Commit(), Times.Once);
         }
+
+        [Fact(DisplayName = "Adicionar Item Command Invalido")]
+        [Trait("Categoria", "Vendas - Pedido Commands Handler")]
+        public async Task AdicionarItem_CommandInvalido_DeveRetornarFalsoELancarEventosDeNotificacao()
+        {
+        }
     }
 }
