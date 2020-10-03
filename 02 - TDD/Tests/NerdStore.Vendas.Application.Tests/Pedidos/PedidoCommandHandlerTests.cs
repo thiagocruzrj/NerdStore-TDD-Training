@@ -28,18 +28,15 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
             // Arrange
             var pedidoCommand = new AdicionarItemPedidoCommand(Guid.NewGuid(), Guid.NewGuid(), "ProdutoTeste", 2, 100);
 
-            var mocker = new AutoMocker();
-            var pedidoHandler = mocker.CreateInstance<PedidoCommandHandler>();
-
-            mocker.GetMock<IPedidoRepository>().Setup(r => r.UnitOfWork.Commit()).Returns(Task.FromResult(true));
+            _mocker.GetMock<IPedidoRepository>().Setup(r => r.UnitOfWork.Commit()).Returns(Task.FromResult(true));
 
             // Act
-            var result = await pedidoHandler.Handle(pedidoCommand, CancellationToken.None);
+            var result = await _pedidoHandler.Handle(pedidoCommand, CancellationToken.None);
 
             // Assert
             Assert.True(result);
-            mocker.GetMock<IPedidoRepository>().Verify(r => r.Adicionar(It.IsAny<Pedido>()), Times.Once);
-            mocker.GetMock<IPedidoRepository>().Verify(r => r.UnitOfWork.Commit(), Times.Once);
+            _mocker.GetMock<IPedidoRepository>().Verify(r => r.Adicionar(It.IsAny<Pedido>()), Times.Once);
+            _mocker.GetMock<IPedidoRepository>().Verify(r => r.UnitOfWork.Commit(), Times.Once);
             // mocker.GetMock<IMediator>().Verify(r => r.Publish(It.IsAny<INotification>(), CancellationToken.None), Times.Once);
         }
 
@@ -56,19 +53,19 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
 
             var pedidoCommand = new AdicionarItemPedidoCommand(clienteId, Guid.NewGuid(), "ProdutoTeste", 2, 100);
 
-            mocker.GetMock<IPedidoRepository>().Setup(r => r.ObterPedidoRascunhoPorClienteId(clienteId))
+            _mocker.GetMock<IPedidoRepository>().Setup(r => r.ObterPedidoRascunhoPorClienteId(clienteId))
                 .Returns(Task.FromResult(pedido));
 
-            mocker.GetMock<IPedidoRepository>().Setup(r => r.UnitOfWork.Commit()).Returns(Task.FromResult(true));
+            _mocker.GetMock<IPedidoRepository>().Setup(r => r.UnitOfWork.Commit()).Returns(Task.FromResult(true));
 
             // Act
-            var result = await pedidoHandler.Handle(pedidoCommand, CancellationToken.None);
+            var result = await _pedidoHandler.Handle(pedidoCommand, CancellationToken.None);
 
             // Assert
             Assert.True(result);
-            mocker.GetMock<IPedidoRepository>().Verify(r => r.AdicionarItem(It.IsAny<PedidoItem>()), Times.Once);
-            mocker.GetMock<IPedidoRepository>().Verify(r => r.Atualizar(It.IsAny<Pedido>()), Times.Once);
-            mocker.GetMock<IPedidoRepository>().Verify(r => r.UnitOfWork.Commit(), Times.Once);
+            _mocker.GetMock<IPedidoRepository>().Verify(r => r.AdicionarItem(It.IsAny<PedidoItem>()), Times.Once);
+            _mocker.GetMock<IPedidoRepository>().Verify(r => r.Atualizar(It.IsAny<Pedido>()), Times.Once);
+            _mocker.GetMock<IPedidoRepository>().Verify(r => r.UnitOfWork.Commit(), Times.Once);
         }
 
         [Fact(DisplayName = "Adicionar Item Existente ao Pedido Rascunho com Sucesso")]
@@ -85,19 +82,19 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
 
             var pedidoCommand = new AdicionarItemPedidoCommand(clienteId, produtoId, "ProdutoTeste", 2, 100);
 
-            mocker.GetMock<IPedidoRepository>().Setup(r => r.ObterPedidoRascunhoPorClienteId(clienteId))
+            _mocker.GetMock<IPedidoRepository>().Setup(r => r.ObterPedidoRascunhoPorClienteId(clienteId))
                 .Returns(Task.FromResult(pedido));
 
-            mocker.GetMock<IPedidoRepository>().Setup(r => r.UnitOfWork.Commit()).Returns(Task.FromResult(true));
+            _mocker.GetMock<IPedidoRepository>().Setup(r => r.UnitOfWork.Commit()).Returns(Task.FromResult(true));
 
             // Act
-            var result = await pedidoHandler.Handle(pedidoCommand, CancellationToken.None);
+            var result = await _pedidoHandler.Handle(pedidoCommand, CancellationToken.None);
 
             // Assert
             Assert.True(result);
-            mocker.GetMock<IPedidoRepository>().Verify(r => r.AtualizarItem(It.IsAny<PedidoItem>()), Times.Once);
-            mocker.GetMock<IPedidoRepository>().Verify(r => r.Atualizar(It.IsAny<Pedido>()), Times.Once);
-            mocker.GetMock<IPedidoRepository>().Verify(r => r.UnitOfWork.Commit(), Times.Once);
+            _mocker.GetMock<IPedidoRepository>().Verify(r => r.AtualizarItem(It.IsAny<PedidoItem>()), Times.Once);
+            _mocker.GetMock<IPedidoRepository>().Verify(r => r.Atualizar(It.IsAny<Pedido>()), Times.Once);
+            _mocker.GetMock<IPedidoRepository>().Verify(r => r.UnitOfWork.Commit(), Times.Once);
         }
 
         [Fact(DisplayName = "Adicionar Item Command Invalido")]
@@ -108,11 +105,11 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
             var pedidoCommand = new AdicionarItemPedidoCommand(Guid.Empty, Guid.Empty, "", 0, 0);
 
             // Act
-            var result = await pedidoHandler.Handle(pedidoCommand, CancellationToken.None);
+            var result = await _pedidoHandler.Handle(pedidoCommand, CancellationToken.None);
 
             // Assert
             Assert.False(result);
-            mocker.GetMock<IMediator>().Verify(m => m.Publish(It.IsAny<INotification>(), CancellationToken.None), Times.Exactly(5));
+            _mocker.GetMock<IMediator>().Verify(m => m.Publish(It.IsAny<INotification>(), CancellationToken.None), Times.Exactly(5));
         }
     }
 }
