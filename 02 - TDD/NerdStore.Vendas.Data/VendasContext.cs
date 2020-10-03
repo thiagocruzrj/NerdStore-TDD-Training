@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using NerdStore.Core.Data;
-using System;
 using System.Threading.Tasks;
 
 namespace NerdStore.Vendas.Data
