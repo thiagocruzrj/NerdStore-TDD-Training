@@ -12,6 +12,15 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
 {
     public class PedidoCommandHandlerTests
     {
+        private readonly AutoMocker _mocker;
+        private readonly PedidoCommandHandler _pedidoHandler;
+
+        public PedidoCommandHandlerTests()
+        {
+            _mocker = new AutoMocker();
+            _pedidoHandler = _mocker.CreateInstance<PedidoCommandHandler>();
+        }
+
         [Fact(DisplayName = "Adicionar Item Novo Pedido com Sucesso")]
         [Trait("Categoria", "Vendas - Pedido Commands Handler")]
         public async Task AdicionarItem_NovoPedido_DeveExecutarComSucesso()
@@ -47,9 +56,6 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
 
             var pedidoCommand = new AdicionarItemPedidoCommand(clienteId, Guid.NewGuid(), "ProdutoTeste", 2, 100);
 
-            var mocker = new AutoMocker();
-            var pedidoHandler = mocker.CreateInstance<PedidoCommandHandler>();
-
             mocker.GetMock<IPedidoRepository>().Setup(r => r.ObterPedidoRascunhoPorClienteId(clienteId))
                 .Returns(Task.FromResult(pedido));
 
@@ -79,9 +85,6 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
 
             var pedidoCommand = new AdicionarItemPedidoCommand(clienteId, produtoId, "ProdutoTeste", 2, 100);
 
-            var mocker = new AutoMocker();
-            var pedidoHandler = mocker.CreateInstance<PedidoCommandHandler>();
-
             mocker.GetMock<IPedidoRepository>().Setup(r => r.ObterPedidoRascunhoPorClienteId(clienteId))
                 .Returns(Task.FromResult(pedido));
 
@@ -103,9 +106,6 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
         {
             // Arrange
             var pedidoCommand = new AdicionarItemPedidoCommand(Guid.Empty, Guid.Empty, "", 0, 0);
-
-            var mocker = new AutoMocker();
-            var pedidoHandler = mocker.CreateInstance<PedidoCommandHandler>();
 
             // Act
             var result = await pedidoHandler.Handle(pedidoCommand, CancellationToken.None);
