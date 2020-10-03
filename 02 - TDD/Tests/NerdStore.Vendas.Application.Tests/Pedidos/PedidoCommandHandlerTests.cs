@@ -54,16 +54,13 @@ namespace NerdStore.Vendas.Application.Tests.Pedidos
         public async Task AdicionarItem_NovoItemAoPedidoRascunho_DeveExecutarComSucesso()
         {
             // Arrange
-            var clienteId = Guid.NewGuid();
-
-            var pedido = Pedido.PedidoFactory.NovoPedidoRascunho(clienteId);
             var pedidoItemExistente = new PedidoItem(Guid.NewGuid(), "ProdutoTeste", 2, 100);
-            pedido.AdicionarItem(pedidoItemExistente);
+            _pedido.AdicionarItem(pedidoItemExistente);
 
-            var pedidoCommand = new AdicionarItemPedidoCommand(clienteId, Guid.NewGuid(), "ProdutoTeste", 2, 100);
+            var pedidoCommand = new AdicionarItemPedidoCommand(_clienteId, Guid.NewGuid(), "ProdutoTeste", 2, 100);
 
-            _mocker.GetMock<IPedidoRepository>().Setup(r => r.ObterPedidoRascunhoPorClienteId(clienteId))
-                .Returns(Task.FromResult(pedido));
+            _mocker.GetMock<IPedidoRepository>().Setup(r => r.ObterPedidoRascunhoPorClienteId(_clienteId))
+                .Returns(Task.FromResult(_pedido));
 
             _mocker.GetMock<IPedidoRepository>().Setup(r => r.UnitOfWork.Commit()).Returns(Task.FromResult(true));
 
