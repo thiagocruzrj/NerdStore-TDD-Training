@@ -25,7 +25,9 @@ namespace NerdStore.Vendas.Application.Commands
 
             _repository.Adicionar(pedido);
 
-            await _mediator.Publish(new PedidoItemAdicionadoEvent(message.ClienteId, pedido.Id, message.ProdutoId, message.Nome, message.ValorUnitario, message.Quantidade), cancellationToken);
+            await _mediator.Publish(new PedidoItemAdicionadoEvent(message.ClienteId, pedido.Id, message.ProdutoId,
+                                    message.Nome, message.ValorUnitario, message.Quantidade), cancellationToken);
+
             return true;
         }
     }
