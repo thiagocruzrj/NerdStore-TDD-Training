@@ -22,5 +22,10 @@ namespace NerdStore.Core.DomainObjects
             _notificacoes ??= new List<Event>();
             _notificacoes.Add(evento);
         }
+
+        public void RemoverEvento(Event evento)
+        {
+            _notificacoes?.Remove(evento);
+        }
     }
 }
