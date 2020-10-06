@@ -53,7 +53,7 @@ namespace NerdStore.Catalog.Domain
 
         }
 
-        public void ReportEstoque(int quantidade)
+        public void ReporEstoque(int quantidade)
         {
             QuantidadeEstoque += quantidade;
         }
