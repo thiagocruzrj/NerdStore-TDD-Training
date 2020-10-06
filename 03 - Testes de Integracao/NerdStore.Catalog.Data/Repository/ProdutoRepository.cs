@@ -39,9 +39,9 @@ namespace NerdStore.Catalog.Data.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Categoria>> ObterCategorias()
+        public async Task<IEnumerable<Categoria>> ObterCategorias()
         {
-            throw new NotImplementedException();
+            return await _catalogContext.Categorias.AsNoTracking().ToListAsync();
         }
 
         public async Task<IEnumerable<Produto>> ObterPorCategoria(int codigo)
