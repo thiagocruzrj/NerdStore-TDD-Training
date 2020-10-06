@@ -8,7 +8,18 @@ namespace NerdStore.Catalog.Data.Mappings
     {
         public void Configure(EntityTypeBuilder<Categoria> builder)
         {
-            throw new System.NotImplementedException();
+            builder.HasKey(c => c.Id);
+
+            builder.Property(c => c.Nome)
+                .IsRequired()
+                .HasColumnType("varchar(250)");
+
+            // 1 : N => Categorias : Produtos
+            builder.HasMany(c => c.Produtos)
+                .WithOne(p => p.Categoria)
+                .HasForeignKey(p => p.CategoriaId);
+
+            builder.ToTable("Categorias");
         }
     }
 }
