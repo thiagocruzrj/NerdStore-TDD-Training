@@ -39,5 +39,10 @@ namespace NerdStore.Catalog.Domain
             Categoria = categoria;
             CategoriaId = categoria.Id;
         }
+
+        public void AlterarDescricao(string descricao)
+        {
+            Descricao = descricao;
+        }
     }
 }
