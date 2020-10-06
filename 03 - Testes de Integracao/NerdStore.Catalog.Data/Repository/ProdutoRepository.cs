@@ -3,6 +3,7 @@ using NerdStore.Catalog.Domain;
 using NerdStore.Core.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NerdStore.Catalog.Data.Repository
@@ -43,9 +44,9 @@ namespace NerdStore.Catalog.Data.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Produto>> ObterPorCategoria(int codigo)
+        public async Task<IEnumerable<Produto>> ObterPorCategoria(int codigo)
         {
-            throw new NotImplementedException();
+            return await _catalogContext.Produtos.AsNoTracking().Include(p => p.Categoria).Where(c => c.Categoria.Codigo == codigo).ToListAsync();
         }
 
         public async Task<Produto> ObterPorId(Guid id)

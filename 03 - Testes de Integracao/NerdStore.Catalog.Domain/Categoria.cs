@@ -6,7 +6,7 @@ namespace NerdStore.Catalog.Domain
     public class Categoria : Entity
     {
         public string Nome { get; private set; }
-        public string Codigo { get; private set; }
+        public int Codigo { get; private set; }
         public ICollection<Produto> Produtos { get; set; }
 
         public Categoria() { }
