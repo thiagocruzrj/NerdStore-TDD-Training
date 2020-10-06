@@ -1,4 +1,5 @@
-﻿using NerdStore.Catalog.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using NerdStore.Catalog.Domain;
 using NerdStore.Core.Data;
 using System;
 using System.Collections.Generic;
@@ -52,9 +53,9 @@ namespace NerdStore.Catalog.Data.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Produto>> ObterTodos()
+        public async Task<IEnumerable<Produto>> ObterTodos()
         {
-            throw new NotImplementedException();
+            return await _catalogContext.Produtos.AsNoTracking().ToListAsync();
         }
 
         public void Dispose()
