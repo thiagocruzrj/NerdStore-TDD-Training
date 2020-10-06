@@ -31,5 +31,7 @@ namespace NerdStore.Catalog.Domain
         }
 
         public void Ativar() => Ativo = true;
+
+        public void Desativar() => Ativo = false;
     }
 }
