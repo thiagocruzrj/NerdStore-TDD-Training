@@ -48,9 +48,9 @@ namespace NerdStore.Catalog.Data.Repository
             throw new NotImplementedException();
         }
 
-        public Task<Produto> ObterPorId(Guid id)
+        public async Task<Produto> ObterPorId(Guid id)
         {
-            throw new NotImplementedException();
+            return await _catalogContext.Produtos.FindAsync(id);
         }
 
         public async Task<IEnumerable<Produto>> ObterTodos()
