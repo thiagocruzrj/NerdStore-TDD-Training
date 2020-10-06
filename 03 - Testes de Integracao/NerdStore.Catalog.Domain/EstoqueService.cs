@@ -15,9 +15,10 @@ namespace NerdStore.Catalog.Domain
             _mediator = mediator;
         }
 
-        public Task<bool> DebitarEstoque(Guid produtoId, int quantidade)
+        public async Task<bool> DebitarEstoque(Guid produtoId, int quantidade)
         {
-            throw new NotImplementedException();
+            if (!await DebitarEstoque(produtoId, quantidade)) return false;
+            return await _produtoRepository.UnitOfWork.Commit();
         }
 
         public void Dispose()
