@@ -29,5 +29,7 @@ namespace NerdStore.Catalog.Domain
             Imagem = imagem;
             Dimensoes = dimensoes;
         }
+
+        public void Ativar() => Ativo = true;
     }
 }
