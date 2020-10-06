@@ -60,7 +60,7 @@ namespace NerdStore.Catalog.Data.Repository
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _catalogContext?.Dispose();
         }
     }
 }
