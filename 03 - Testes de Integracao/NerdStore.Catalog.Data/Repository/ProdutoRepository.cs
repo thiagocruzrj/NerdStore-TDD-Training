@@ -8,7 +8,14 @@ namespace NerdStore.Catalog.Data.Repository
 {
     public class ProdutoRepository : IProdutoRepository
     {
-        public IUnitOfWork UnitOfWork => throw new NotImplementedException();
+        private readonly CatalogoContext _catalogContext;
+
+        public ProdutoRepository(CatalogoContext catalogContext)
+        {
+            _catalogContext = catalogContext;
+        }
+
+        public IUnitOfWork UnitOfWork => _catalogContext;
 
         public void Adicionar(Produto produto)
         {
