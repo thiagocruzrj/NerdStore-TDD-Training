@@ -44,5 +44,16 @@ namespace NerdStore.Catalog.Domain
         {
             Descricao = descricao;
         }
+
+        public void DebitarEstoque(int quantidade)
+        {
+            if (quantidade < 0) quantidade *= 1; 
+
+        }
+
+        public void ReportEstorque(int quantidade)
+        {
+            QuantidadeEstoque += quantidade;
+        }
     }
 }
