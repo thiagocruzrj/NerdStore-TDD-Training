@@ -21,22 +21,22 @@ namespace NerdStore.Catalog.Data.Repository
 
         public void Adicionar(Produto produto)
         {
-            throw new NotImplementedException();
+            _catalogContext.Produtos.Add(produto);
         }
 
         public void Adicionar(Categoria categoria)
         {
-            throw new NotImplementedException();
+            _catalogContext.Categorias.Add(categoria);
         }
 
         public void Atualizar(Produto produto)
         {
-            throw new NotImplementedException();
+            _catalogContext.Produtos.Update(produto);
         }
 
         public void Atualizar(Categoria categoria)
         {
-            throw new NotImplementedException();
+            _catalogContext.Categorias.Update(categoria);
         }
 
         public async Task<IEnumerable<Categoria>> ObterCategorias()
