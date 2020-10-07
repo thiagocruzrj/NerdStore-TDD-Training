@@ -37,11 +37,6 @@ namespace NerdStore.Catalog.Application.Services
             throw new NotImplementedException();
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<IEnumerable<CategoriaViewModel>> ObterCategorias()
         {
             throw new NotImplementedException();
@@ -65,6 +60,12 @@ namespace NerdStore.Catalog.Application.Services
         public Task<ProdutoViewModel> ReporEstoque(Guid id, int quantidade)
         {
             throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            _produtoRepository?.Dispose();
+            _estoqueService?.Dispose();
         }
     }
 }
