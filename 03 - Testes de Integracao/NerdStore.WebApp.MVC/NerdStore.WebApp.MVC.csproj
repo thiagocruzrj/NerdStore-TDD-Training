@@ -19,7 +19,15 @@
 
   <ItemGroup>
     <Folder Include="Extensions\" />
-    <Folder Include="Setup\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\02 - TDD\NerdStore.Core\NerdStore.Core.csproj" />
+    <ProjectReference Include="..\..\02 - TDD\NerdStore.Vendas.Application\NerdStore.Vendas.Application.csproj" />
+    <ProjectReference Include="..\..\02 - TDD\NerdStore.Vendas.Data\NerdStore.Vendas.Data.csproj" />
+    <ProjectReference Include="..\NerdStore.Catalog.Application\NerdStore.Catalog.Application.csproj" />
+    <ProjectReference Include="..\NerdStore.Catalog.Data\NerdStore.Catalog.Data.csproj" />
+    <ProjectReference Include="..\NerdStore.Catalog.Domain\NerdStore.Catalog.Domain.csproj" />
   </ItemGroup>
 
 </Project>
