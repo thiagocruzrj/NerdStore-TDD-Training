@@ -52,9 +52,9 @@ namespace NerdStore.Catalog.Application.Services
             return _mapper.Map<IEnumerable<CategoriaViewModel>>(await _produtoRepository.ObterCategorias());
         }
 
-        public Task<IEnumerable<ProdutoViewModel>> ObterPorCategoria(int codigo)
+        public async Task<IEnumerable<ProdutoViewModel>> ObterPorCategoria(int codigo)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepository.ObterPorCategoria(codigo));
         }
 
         public Task<ProdutoViewModel> ObterPorId(Guid id)
