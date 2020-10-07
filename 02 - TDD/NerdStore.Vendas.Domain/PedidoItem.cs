@@ -30,5 +30,10 @@ namespace NerdStore.Vendas.Domain
         {
             return ValorUnitario * Quantidade;
         }
+
+        internal void AtualizarUnidades(int unidades)
+        {
+            Quantidade = unidades;
+        }
     }
 }
