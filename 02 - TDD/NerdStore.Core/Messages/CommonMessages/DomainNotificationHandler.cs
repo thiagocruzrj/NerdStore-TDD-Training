@@ -14,9 +14,10 @@ namespace NerdStore.Core.Messages.CommonMessages
             _notifications = new List<DomainNotification>();
         }
 
-        public Task Handle(DomainNotification notification, CancellationToken cancellationToken)
+        public Task Handle(DomainNotification message, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            _notifications.Add(message);
+            return Task.CompletedTask;
         }
     }
 }
