@@ -62,9 +62,9 @@ namespace NerdStore.Catalog.Application.Services
             return _mapper.Map<ProdutoViewModel>(await _produtoRepository.ObterPorId(id));
         }
 
-        public Task<IEnumerable<ProdutoViewModel>> ObterTodos()
+        public async Task<IEnumerable<ProdutoViewModel>> ObterTodos()
         {
-            throw new NotImplementedException();
+            return _mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepository.ObterTodos());
         }
 
         public Task<ProdutoViewModel> ReporEstoque(Guid id, int quantidade)
