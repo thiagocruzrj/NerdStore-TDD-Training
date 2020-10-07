@@ -142,6 +142,12 @@ namespace NerdStore.Vendas.Domain
             PedidoStatus = PedidoStatus.Rascunho;
         }
 
+        public void AtualizarUnidades(PedidoItem item, int unidades)
+        {
+            item.AtualizarUnidades(unidades);
+            AtualizarItem(item);
+        }
+
         public static class PedidoFactory
         {
             public static Pedido NovoPedidoRascunho(Guid clienteId)
