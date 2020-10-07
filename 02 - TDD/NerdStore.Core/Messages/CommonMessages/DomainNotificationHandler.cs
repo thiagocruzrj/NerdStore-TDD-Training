@@ -30,5 +30,7 @@ namespace NerdStore.Core.Messages.CommonMessages
         {
             return ObterNotificacoes().Any();
         }
+
+        public void Dispose() => _notifications = new List<DomainNotification>();
     }
 }
