@@ -119,9 +119,42 @@ namespace NerdStore.Vendas.Application.Commands
             return await _pedidoRepository.UnitOfWork.Commit();
         }
 
-        public Task<bool> Handle(AplicarVoucherPedidoCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(AplicarVoucherPedidoCommand message, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            if (!ValidarComando(message)) return false;
+
+            var pedido = await _pedidoRepository.ObterPedidoRascunhoPorClienteId(message.ClienteId);
+
+            if (pedido == null)
+            {
+                await _mediator.Publish(new DomainNotification("pedido", "Pedido não encontrado!"), cancellationToken);
+                return false;
+            }
+
+            var voucher = await _pedidoRepository.ObterVoucherPorCodigo(message.CodigoVoucher);
+
+            if (voucher == null)
+            {
+                await _mediator.Publish(new DomainNotification("pedido", "Voucher não encontrado!"), cancellationToken);
+                return false;
+            }
+
+            var voucherAplicacaoValidation = pedido.AplicarVoucher(voucher);
+            if (!voucherAplicacaoValidation.IsValid)
+            {
+                foreach (var error in voucherAplicacaoValidation.Errors)
+                {
+                    await _mediator.Publish(new DomainNotification(error.ErrorCode, error.ErrorMessage), cancellationToken);
+                }
+
+                return false;
+            }
+
+            pedido.AdicionarEvento(new VoucherAplicadoPedidoEvent(message.ClienteId, pedido.Id, voucher.Id));
+
+            _pedidoRepository.Atualizar(pedido);
+
+            return await _pedidoRepository.UnitOfWork.Commit();
         }
 
         private bool ValidarComando(Command message)
