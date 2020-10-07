@@ -30,9 +30,12 @@ namespace NerdStore.Catalog.Application.Services
             await _produtoRepository.UnitOfWork.Commit();
         }
 
-        public Task AtualizarProduto(ProdutoViewModel produtoViewModel)
+        public async Task AtualizarProduto(ProdutoViewModel produtoViewModel)
         {
-            throw new NotImplementedException();
+            var produto = _mapper.Map<Produto>(produtoViewModel);
+            _produtoRepository.Atualizar(produto);
+
+            await _produtoRepository.UnitOfWork.Commit();
         }
 
         public Task<ProdutoViewModel> DebitarEstoque(Guid id, int quantidade)
