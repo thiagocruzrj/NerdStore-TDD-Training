@@ -11,7 +11,7 @@ namespace NerdStore.Catalog.Domain
 
         public Categoria() { }
 
-        public Categoria(string nome, string codigo)
+        public Categoria(string nome, int codigo)
         {
             Nome = nome;
             Codigo = codigo;
