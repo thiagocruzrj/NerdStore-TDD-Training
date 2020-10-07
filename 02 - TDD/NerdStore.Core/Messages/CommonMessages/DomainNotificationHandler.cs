@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,6 +24,11 @@ namespace NerdStore.Core.Messages.CommonMessages
         public virtual List<DomainNotification> ObterNotificacoes()
         {
             return _notifications;
+        }
+
+        public virtual bool TemNotificacao()
+        {
+            return ObterNotificacoes().Any();
         }
     }
 }
