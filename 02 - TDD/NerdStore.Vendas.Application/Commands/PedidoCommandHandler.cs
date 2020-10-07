@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 
 namespace NerdStore.Vendas.Application.Commands
 {
-    public class PedidoCommandHandler : IRequestHandler<AdicionarItemPedidoCommand, bool>
+    public class PedidoCommandHandler : IRequestHandler<AdicionarItemPedidoCommand, bool>,
+        IRequestHandler<AtualizarItemPedidoCommand, bool>,
+        IRequestHandler<RemoverItemPedidoCommand, bool>,
+        IRequestHandler<AplicarVoucherPedidoCommand, bool>
     {
         private readonly IPedidoRepository _pedidoRepository;
         private readonly IMediator _mediator;
