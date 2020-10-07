@@ -90,9 +90,33 @@ namespace NerdStore.Vendas.Application.Commands
             return await _pedidoRepository.UnitOfWork.Commit();
         }
 
-        public Task<bool> Handle(RemoverItemPedidoCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(RemoverItemPedidoCommand message, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            if (!ValidarComando(message)) return false;
+
+            var pedido = await _pedidoRepository.ObterPedidoRascunhoPorClienteId(message.ClienteId);
+
+            if (pedido == null)
+            {
+                await _mediator.Publish(new DomainNotification("pedido", "Pedido não encontrado!"), cancellationToken);
+                return false;
+            }
+
+            var pedidoItem = await _pedidoRepository.ObterItemPorPedido(pedido.Id, message.ProdutoId);
+
+            if (pedidoItem != null && !pedido.PedidoItemExistente(pedidoItem))
+            {
+                await _mediator.Publish(new DomainNotification("pedido", "Item do pedido não encontrado!"), cancellationToken);
+                return false;
+            }
+
+            pedido.RemoverItem(pedidoItem);
+            pedido.AdicionarEvento(new PedidoProdutoRemovidoEvent(message.ClienteId, pedido.Id, message.ProdutoId));
+
+            _pedidoRepository.RemoverItem(pedidoItem);
+            _pedidoRepository.Atualizar(pedido);
+
+            return await _pedidoRepository.UnitOfWork.Commit();
         }
 
         public Task<bool> Handle(AplicarVoucherPedidoCommand request, CancellationToken cancellationToken)
