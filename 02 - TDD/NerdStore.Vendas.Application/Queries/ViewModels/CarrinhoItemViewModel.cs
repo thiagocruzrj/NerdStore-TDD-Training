@@ -1,4 +1,6 @@
-﻿namespace NerdStore.Vendas.Application.Queries.ViewModels
+﻿using System;
+
+namespace NerdStore.Vendas.Application.Queries.ViewModels
 {
     public class CarrinhoItemViewModel
     {
