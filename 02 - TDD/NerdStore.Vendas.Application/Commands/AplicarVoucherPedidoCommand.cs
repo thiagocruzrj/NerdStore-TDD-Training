@@ -17,7 +17,8 @@ namespace NerdStore.Vendas.Application.Commands
 
         public override bool EhValido()
         {
-            throw new System.NotImplementedException();
+            ValidationResult = new AplicarVoucherPedidoValidation().Validate(this);
+            return ValidationResult.IsValid;
         }
     }
 
