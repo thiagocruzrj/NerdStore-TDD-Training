@@ -67,9 +67,12 @@ namespace NerdStore.Catalog.Application.Services
             return _mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepository.ObterTodos());
         }
 
-        public Task<ProdutoViewModel> ReporEstoque(Guid id, int quantidade)
+        public async Task<ProdutoViewModel> ReporEstoque(Guid id, int quantidade)
         {
-            throw new NotImplementedException();
+            if (!_estoqueService.ReporEstoque(id, quantidade).Result)
+                throw new DomainException("Falha ao repor estoque");
+
+            return _mapper.Map<ProdutoViewModel>(await _produtoRepository.ObterPorId(id));
         }
 
         public void Dispose()
