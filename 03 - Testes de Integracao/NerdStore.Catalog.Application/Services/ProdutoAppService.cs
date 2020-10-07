@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using NerdStore.Catalog.Application.ViewModels;
 using NerdStore.Catalog.Domain;
+using NerdStore.Core.DomainObjects;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -38,9 +39,12 @@ namespace NerdStore.Catalog.Application.Services
             await _produtoRepository.UnitOfWork.Commit();
         }
 
-        public Task<ProdutoViewModel> DebitarEstoque(Guid id, int quantidade)
+        public async Task<ProdutoViewModel> DebitarEstoque(Guid id, int quantidade)
         {
-            throw new NotImplementedException();
+            if (! await _estoqueService.DebitarEstoque(id, quantidade))
+                throw new DomainException("Falha ao debitar do estoque");
+
+            return _mapper.Map<ProdutoViewModel>(await _produtoRepository.ObterPorId(id));
         }
 
         public Task<IEnumerable<CategoriaViewModel>> ObterCategorias()
