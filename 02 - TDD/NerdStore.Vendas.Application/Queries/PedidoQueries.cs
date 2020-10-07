@@ -15,9 +15,38 @@ namespace NerdStore.Vendas.Application.Queries
             _pedidoRepository = pedidoRepository;
         }
 
-        public Task<CarrinhoViewModel> ObterCarrinhoCliente(Guid clienteId)
+        public async Task<CarrinhoViewModel> ObterCarrinhoCliente(Guid clienteId)
         {
-            throw new NotImplementedException();
+            var pedido = await _pedidoRepository.ObterPedidoRascunhoPorClienteId(clienteId);
+            if (pedido == null) return null;
+
+            var carrinho = new CarrinhoViewModel
+            {
+                ClienteId = pedido.ClienteId,
+                ValorTotal = pedido.ValorTotal,
+                PedidoId = pedido.Id,
+                ValorDesconto = pedido.Desconto,
+                SubTotal = pedido.Desconto + pedido.ValorTotal
+            };
+
+            if (pedido.VoucherId != null)
+            {
+                carrinho.VoucherCodigo = pedido.Voucher.Codigo;
+            }
+
+            foreach (var item in pedido.PedidoItens)
+            {
+                carrinho.Items.Add(new CarrinhoItemViewModel
+                {
+                    ProdutoId = item.ProdutoId,
+                    ProdutoNome = item.ProdutoNome,
+                    Quantidade = item.Quantidade,
+                    ValorUnitario = item.ValorUnitario,
+                    ValorTotal = item.ValorUnitario * item.Quantidade
+                });
+            }
+
+            return carrinho;
         }
 
         public Task<IEnumerable<PedidoViewModel>> ObterPedidosCliente(Guid clienteId)
