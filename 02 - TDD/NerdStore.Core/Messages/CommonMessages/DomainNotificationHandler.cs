@@ -19,5 +19,10 @@ namespace NerdStore.Core.Messages.CommonMessages
             _notifications.Add(message);
             return Task.CompletedTask;
         }
+
+        public virtual List<DomainNotification> ObterNotificacoes()
+        {
+            return _notifications;
+        }
     }
 }
