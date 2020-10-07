@@ -22,9 +22,12 @@ namespace NerdStore.Catalog.Application.Services
             _estoqueService = estoqueService;
         }
 
-        public Task AdicionarProduto(ProdutoViewModel produtoViewModel)
+        public async Task AdicionarProduto(ProdutoViewModel produtoViewModel)
         {
-            throw new NotImplementedException();
+            var produto = _mapper.Map<Produto>(produtoViewModel);
+            _produtoRepository.Adicionar(produto);
+
+            await _produtoRepository.UnitOfWork.Commit();
         }
 
         public Task AtualizarProduto(ProdutoViewModel produtoViewModel)
