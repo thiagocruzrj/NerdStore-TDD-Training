@@ -1,5 +1,4 @@
-﻿
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using NerdStore.Catalog.Application.Services;
 using NerdStore.Catalog.Data;
@@ -7,7 +6,10 @@ using NerdStore.Catalog.Data.Repository;
 using NerdStore.Catalog.Domain;
 using NerdStore.Core.Messages.CommonMessages;
 using NerdStore.Vendas.Application.Commands;
+using NerdStore.Vendas.Application.Queries;
 using NerdStore.Vendas.Data;
+using NerdStore.Vendas.Data.Repository;
+using NerdStore.Vendas.Domain;
 
 namespace NerdStore.WebApp.MVC.Setup
 {
@@ -26,6 +28,8 @@ namespace NerdStore.WebApp.MVC.Setup
 
 
             // Vendas
+            services.AddScoped<IPedidoRepository, PedidoRepository>();
+            services.AddScoped<IPedidoQueries, PedidoQueries>();
             services.AddScoped<VendasContext>();
 
             services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, PedidoCommandHandler>();
