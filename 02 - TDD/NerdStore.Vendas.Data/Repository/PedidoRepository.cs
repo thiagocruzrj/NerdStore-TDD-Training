@@ -25,9 +25,17 @@ namespace NerdStore.Vendas.Data.Repository
         public async Task<IEnumerable<Pedido>> ObterListaPorClienteId(Guid clienteId) =>
             await _context.Pedidos.AsNoTracking().Where(p => p.ClienteId == clienteId).ToListAsync();
 
-        public Task<Pedido> ObterPedidoRascunhoPorClienteId(Guid clienteId)
+        public async Task<Pedido> ObterPedidoRascunhoPorClienteId(Guid clienteId)
         {
-            throw new NotImplementedException();
+            var pedido = await _context.Pedidos.FirstOrDefaultAsync(p => p.ClienteId == clienteId && p.PedidoStatus == PedidoStatus.Rascunho);
+            if (pedido == null) return null;
+
+            await _context.Entry(pedido).Collection(i => i.PedidoItems).LoadAsync();
+
+            if (pedido.VoucherId != null)
+                await _context.Entry(pedido).Reference(i => i.Voucher).LoadAsync();
+
+            return pedido;
         }
 
         public Task<Voucher> ObterVoucherPorCodigo(string codigo)
