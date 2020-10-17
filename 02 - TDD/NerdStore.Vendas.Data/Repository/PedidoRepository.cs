@@ -1,4 +1,5 @@
-﻿using NerdStore.Core.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using NerdStore.Core.Data;
 using NerdStore.Vendas.Domain;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,26 @@ namespace NerdStore.Vendas.Data.Repository
         {
             _context = context;
         }
-
+        
         public IUnitOfWork UnitOfWork => _context;
+
+        public async Task<PedidoItem> ObterItemPorPedido(Guid pedidoId, Guid produtoId) =>
+            await _context.PedidoItems.FirstOrDefaultAsync(p => p.ProdutoId == produtoId && p.PedidoId == pedidoId);
+
+        public Task<IEnumerable<Pedido>> ObterListaPorClienteId(Guid clienteId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Pedido> ObterPedidoRascunhoPorClienteId(Guid clienteId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Voucher> ObterVoucherPorCodigo(string codigo)
+        {
+            throw new NotImplementedException();
+        }
 
         public void Adicionar(Pedido pedido)
         {
@@ -37,34 +56,14 @@ namespace NerdStore.Vendas.Data.Repository
             throw new NotImplementedException();
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<PedidoItem> ObterItemPorPedido(Guid pedidoId, Guid produtoId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Pedido>> ObterListaPorClienteId(Guid clienteId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Pedido> ObterPedidoRascunhoPorClienteId(Guid clienteId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Voucher> ObterVoucherPorCodigo(string codigo)
-        {
-            throw new NotImplementedException();
-        }
-
         public void RemoverItem(PedidoItem pedidoItem)
         {
             throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
     }
 }
