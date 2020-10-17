@@ -19,7 +19,7 @@ namespace NerdStore.Vendas.Data
         }
 
         public DbSet<Pedido> Pedidos { get; set; }
-        public DbSet<PedidoItem> PedidoItems { get; set; }
+        public DbSet<PedidoItem> PedidoItens { get; set; }
         public DbSet<Voucher> Vouchers { get; set; }
 
         public async Task<bool> Commit()

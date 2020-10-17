@@ -20,7 +20,7 @@ namespace NerdStore.Vendas.Data.Repository
         public IUnitOfWork UnitOfWork => _context;
 
         public async Task<PedidoItem> ObterItemPorPedido(Guid pedidoId, Guid produtoId) =>
-            await _context.PedidoItems.FirstOrDefaultAsync(p => p.ProdutoId == produtoId && p.PedidoId == pedidoId);
+            await _context.PedidoItens.FirstOrDefaultAsync(p => p.ProdutoId == produtoId && p.PedidoId == pedidoId);
 
         public async Task<IEnumerable<Pedido>> ObterListaPorClienteId(Guid clienteId) =>
             await _context.Pedidos.AsNoTracking().Where(p => p.ClienteId == clienteId).ToListAsync();
@@ -30,7 +30,7 @@ namespace NerdStore.Vendas.Data.Repository
             var pedido = await _context.Pedidos.FirstOrDefaultAsync(p => p.ClienteId == clienteId && p.PedidoStatus == PedidoStatus.Rascunho);
             if (pedido == null) return null;
 
-            await _context.Entry(pedido).Collection(i => i.PedidoItems).LoadAsync();
+            await _context.Entry(pedido).Collection(i => i.PedidoItens).LoadAsync();
 
             if (pedido.VoucherId != null)
                 await _context.Entry(pedido).Reference(i => i.Voucher).LoadAsync();
@@ -48,7 +48,7 @@ namespace NerdStore.Vendas.Data.Repository
 
         public void AdicionarItem(PedidoItem pedidoItem)
         {
-            _context.PedidoItems.Add(pedidoItem);
+            _context.PedidoItens.Add(pedidoItem);
         }
 
         public void Atualizar(Pedido pedido)
@@ -58,12 +58,12 @@ namespace NerdStore.Vendas.Data.Repository
 
         public void AtualizarItem(PedidoItem pedidoItem)
         {
-            _context.PedidoItems.Update(pedidoItem);
+            _context.PedidoItens.Update(pedidoItem);
         }
 
         public void RemoverItem(PedidoItem pedidoItem)
         {
-            _context.PedidoItems.Remove(pedidoItem);
+            _context.PedidoItens.Remove(pedidoItem);
         }
 
         public void Dispose()

@@ -16,7 +16,7 @@ namespace NerdStore.Vendas.Data.Mappings
 
             // 1 : N => Pedido : Pagamento
             builder.HasOne(c => c.Pedido)
-                .WithMany(c => c.PedidoItems);
+                .WithMany(c => c.PedidoItens);
 
             builder.ToTable("PedidoItems");
         }
