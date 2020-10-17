@@ -63,7 +63,7 @@ namespace NerdStore.Vendas.Data.Repository
 
         public void RemoverItem(PedidoItem pedidoItem)
         {
-            throw new NotImplementedException();
+            _context.PedidoItems.Remove(pedidoItem);
         }
 
         public void Dispose()
