@@ -53,7 +53,7 @@ namespace NerdStore.Vendas.Data.Repository
 
         public void Atualizar(Pedido pedido)
         {
-            throw new NotImplementedException();
+            _context.Pedidos.Update(pedido);
         }
 
         public void AtualizarItem(PedidoItem pedidoItem)
