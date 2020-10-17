@@ -38,10 +38,8 @@ namespace NerdStore.Vendas.Data.Repository
             return pedido;
         }
 
-        public Task<Voucher> ObterVoucherPorCodigo(string codigo)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Voucher> ObterVoucherPorCodigo(string codigo) =>
+            await _context.Vouchers.FirstOrDefaultAsync(v => v.Codigo == codigo);
 
         public void Adicionar(Pedido pedido)
         {
