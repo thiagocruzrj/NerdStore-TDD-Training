@@ -21,8 +21,9 @@ namespace NerdStore.WebApp.Tests
         public IntegrationTestsFixture()
         {
             var clientOptions = new WebApplicationFactoryClientOptions { };
+
             Factory = new LojaAppFactory<IStartup>();
-            Client = Factory.CreateClient();
+            Client = Factory.CreateClient(clientOptions);
         }
 
         public void Dispose() 
