@@ -1,4 +1,5 @@
-﻿using NerdStore.WebApp.MVC;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
+using NerdStore.WebApp.MVC;
 using NerdStore.WebApp.Tests.Config;
 using System;
 using System.Net.Http;
@@ -19,6 +20,7 @@ namespace NerdStore.WebApp.Tests
 
         public IntegrationTestsFixture()
         {
+            var clientOptions = new WebApplicationFactoryClientOptions { };
             Factory = new LojaAppFactory<IStartup>();
             Client = Factory.CreateClient();
         }
