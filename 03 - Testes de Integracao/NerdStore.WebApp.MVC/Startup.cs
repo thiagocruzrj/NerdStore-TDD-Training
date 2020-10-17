@@ -14,6 +14,10 @@ using NerdStore.Catalog.Application.AutoMapper;
 using NerdStore.Catalog.Data;
 using NerdStore.Vendas.Data;
 using NerdStore.WebApp.MVC.Setup;
+using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using System;
 
 namespace NerdStore.WebApp.MVC
 {
@@ -45,37 +49,48 @@ namespace NerdStore.WebApp.MVC
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddControllersWithViews();
             services.AddHttpContextAccessor();
 
             services.AddSwaggerGen(c =>
             {
-                var security = new Dictionary<string, IEnumerable<string>>
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    {"Bearer", new string[] { }}
-                };
-
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
-                {
-                    Description = "Insira o token JWT desta maneira: Bearer {seu token}",
+                    Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer'" +
+                    " [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
                     Name = "Authorization",
-                    In = "header",
-                    Type = "apiKey"
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
                 });
 
-                c.AddSecurityRequirement(security);
-
-                c.SwaggerDoc("v1", new Info
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
-                    Version = "v1",
-                    Title = "desenvolvedor.io API",
-                    Description = "desenvolvedor.io  API",
-                    TermsOfService = "Nenhum",
-                    Contact = new Contact { Name = "desenvolvedor.io", Email = "email@desenvolvedor.io", Url = "http://desenvolvedor.io" },
-                    License = new License { Name = "MIT", Url = "http://desenvolvedor.io/licensa" }
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
+
+                        },
+                        new List<string>()
+                    }
+                });
+
+                c.SwaggerDoc("v1", new OpenApiInfo()
+                {
+                    Title = "NerdStore Enterprise Catalog Api",
+                    Description = "Api created to increase base microservices communication skills",
+                    Contact = new OpenApiContact() { Name = "Thiago Cruz", Email = "thagocruz@gmail.com" },
+                    License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensourse.org/licenses/MIT") }
                 });
             });
 
