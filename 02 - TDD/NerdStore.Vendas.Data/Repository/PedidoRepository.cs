@@ -48,7 +48,7 @@ namespace NerdStore.Vendas.Data.Repository
 
         public void AdicionarItem(PedidoItem pedidoItem)
         {
-            throw new NotImplementedException();
+            _context.PedidoItems.Add(pedidoItem);
         }
 
         public void Atualizar(Pedido pedido)
