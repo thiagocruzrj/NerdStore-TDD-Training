@@ -3,6 +3,7 @@ using NerdStore.Core.Data;
 using NerdStore.Vendas.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NerdStore.Vendas.Data.Repository
@@ -21,10 +22,8 @@ namespace NerdStore.Vendas.Data.Repository
         public async Task<PedidoItem> ObterItemPorPedido(Guid pedidoId, Guid produtoId) =>
             await _context.PedidoItems.FirstOrDefaultAsync(p => p.ProdutoId == produtoId && p.PedidoId == pedidoId);
 
-        public Task<IEnumerable<Pedido>> ObterListaPorClienteId(Guid clienteId)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<Pedido>> ObterListaPorClienteId(Guid clienteId) =>
+            await _context.Pedidos.AsNoTracking().Where(p => p.ClienteId == clienteId).ToListAsync();
 
         public Task<Pedido> ObterPedidoRascunhoPorClienteId(Guid clienteId)
         {
