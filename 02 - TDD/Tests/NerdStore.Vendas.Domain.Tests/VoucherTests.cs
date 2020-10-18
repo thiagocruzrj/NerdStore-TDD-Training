@@ -6,12 +6,13 @@ namespace NerdStore.Vendas.Domain.Tests
 {
     public class VoucherTests
     {
-        [Fact(DisplayName = "Validar Voucher Tipo Valor Valido")]
+        [Fact(DisplayName = "Validar Voucher Tipo Valor Válido")]
         [Trait("Categoria", "Vendas - Voucher")]
-        public void Voucher_ValidarTipoValorVoucher_DeveEstarValido()
+        public void Voucher_ValidarVoucherTipoValor_DeveEstarValido()
         {
             // Arrange
-            var voucher = new Voucher("PROMO-15-REAIS", null, 15, TipoDescontoVoucher.Valor, 1, DateTime.Now.AddDays(15), true, false);
+            var voucher = new Voucher("PROMO-15-REAIS", null, 15, 1,
+                TipoDescontoVoucher.Valor, DateTime.Now.AddDays(15), true, false);
 
             // Act
             var result = voucher.ValidarSeAplicavel();
@@ -20,26 +21,13 @@ namespace NerdStore.Vendas.Domain.Tests
             Assert.True(result.IsValid);
         }
 
-        [Fact(DisplayName = "Validar Voucher Tipo Porcentagem Valido")]
+        [Fact(DisplayName = "Validar Voucher Tipo Valor Inválido")]
         [Trait("Categoria", "Vendas - Voucher")]
-        public void Voucher_ValidarTipoPorcentagemVoucher_DeveEstarValido()
+        public void Voucher_ValidarVoucherTipoValor_DeveEstarInvalido()
         {
             // Arrange
-            var voucher = new Voucher("PROMO-15-PORCENTO", 15, 0, TipoDescontoVoucher.Porcentagem, 1, DateTime.Now.AddDays(15), true, false);
-
-            // Act
-            var result = voucher.ValidarSeAplicavel();
-
-            // Assert
-            Assert.True(result.IsValid);
-        }
-
-        [Fact(DisplayName = "Validar Voucher Tipo Valor Invalido")]
-        [Trait("Categoria", "Vendas - Voucher")]
-        public void Voucher_ValidarTipoValorVoucher_DeveEstarInvalido()
-        {
-            // Arrange
-            var voucher = new Voucher("", null, null, TipoDescontoVoucher.Valor, 0, DateTime.Now.AddDays(-1), false, true);
+            var voucher = new Voucher("", null, null, 0,
+                TipoDescontoVoucher.Valor, DateTime.Now.AddDays(-1), false, true);
 
             // Act
             var result = voucher.ValidarSeAplicavel();
@@ -49,18 +37,32 @@ namespace NerdStore.Vendas.Domain.Tests
             Assert.Equal(6, result.Errors.Count);
             Assert.Contains(VoucherAplicavelValidation.AtivoErroMsg, result.Errors.Select(c => c.ErrorMessage));
             Assert.Contains(VoucherAplicavelValidation.CodigoErroMsg, result.Errors.Select(c => c.ErrorMessage));
-            Assert.Contains(VoucherAplicavelValidation.DataValidadeErrorMsg, result.Errors.Select(c => c.ErrorMessage));
+            Assert.Contains(VoucherAplicavelValidation.DataValidadeErroMsg, result.Errors.Select(c => c.ErrorMessage));
             Assert.Contains(VoucherAplicavelValidation.QuantidadeErroMsg, result.Errors.Select(c => c.ErrorMessage));
             Assert.Contains(VoucherAplicavelValidation.UtilizadoErroMsg, result.Errors.Select(c => c.ErrorMessage));
             Assert.Contains(VoucherAplicavelValidation.ValorDescontoErroMsg, result.Errors.Select(c => c.ErrorMessage));
         }
 
-        [Fact(DisplayName = "Validar Voucher Tipo Porcentagem Invalido")]
+        [Fact(DisplayName = "Validar Voucher Porcentagem Válido")]
         [Trait("Categoria", "Vendas - Voucher")]
-        public void Voucher_ValidarTipoPorcentagemVoucher_DeveEstarInvalido()
+        public void Voucher_ValidarVoucherPorcentagem_DeveEstarValido()
         {
-            // Arrange
-            var voucher = new Voucher("", null, null, TipoDescontoVoucher.Porcentagem, 0, DateTime.Now.AddDays(-1), false, true);
+            var voucher = new Voucher("PROMO-15-OFF", 15, null, 1,
+                TipoDescontoVoucher.Porcentagem, DateTime.Now.AddDays(15), true, false);
+
+            // Act
+            var result = voucher.ValidarSeAplicavel();
+
+            // Assert
+            Assert.True(result.IsValid);
+        }
+
+        [Fact(DisplayName = "Validar Voucher Porcentagem Inválido")]
+        [Trait("Categoria", "Vendas - Voucher")]
+        public void Voucher_ValidarVoucherPorcentagem_DeveEstarInvalido()
+        {
+            var voucher = new Voucher("", null, null, 0,
+                TipoDescontoVoucher.Porcentagem, DateTime.Now.AddDays(-1), false, true);
 
             // Act
             var result = voucher.ValidarSeAplicavel();
@@ -70,7 +72,7 @@ namespace NerdStore.Vendas.Domain.Tests
             Assert.Equal(6, result.Errors.Count);
             Assert.Contains(VoucherAplicavelValidation.AtivoErroMsg, result.Errors.Select(c => c.ErrorMessage));
             Assert.Contains(VoucherAplicavelValidation.CodigoErroMsg, result.Errors.Select(c => c.ErrorMessage));
-            Assert.Contains(VoucherAplicavelValidation.DataValidadeErrorMsg, result.Errors.Select(c => c.ErrorMessage));
+            Assert.Contains(VoucherAplicavelValidation.DataValidadeErroMsg, result.Errors.Select(c => c.ErrorMessage));
             Assert.Contains(VoucherAplicavelValidation.QuantidadeErroMsg, result.Errors.Select(c => c.ErrorMessage));
             Assert.Contains(VoucherAplicavelValidation.UtilizadoErroMsg, result.Errors.Select(c => c.ErrorMessage));
             Assert.Contains(VoucherAplicavelValidation.PercentualDescontoErroMsg, result.Errors.Select(c => c.ErrorMessage));

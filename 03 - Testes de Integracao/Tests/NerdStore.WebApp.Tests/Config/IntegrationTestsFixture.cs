@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
-using NerdStore.WebApp.MVC;
-using System;
+﻿using System;
 using System.Net.Http;
+using Microsoft.AspNetCore.Mvc.Testing;
+using NerdStore.WebApp.MVC;
 using Xunit;
 
 namespace NerdStore.WebApp.Tests.Config
@@ -12,16 +12,16 @@ namespace NerdStore.WebApp.Tests.Config
     [CollectionDefinition(nameof(IntegrationApiTestsFixtureCollection))]
     public class IntegrationApiTestsFixtureCollection : ICollectionFixture<IntegrationTestsFixture<StartupApiTests>> { }
 
-    public class IntegrationTestsFixture<IStartup> : IDisposable where IStartup : class
+    public class IntegrationTestsFixture<TStartup> : IDisposable where TStartup : class
     {
-        public readonly LojaAppFactory<IStartup> Factory;
+        public readonly LojaAppFactory<TStartup> Factory;
         public HttpClient Client;
 
         public IntegrationTestsFixture()
         {
             var clientOptions = new WebApplicationFactoryClientOptions { };
 
-            Factory = new LojaAppFactory<IStartup>();
+            Factory = new LojaAppFactory<TStartup>();
             Client = Factory.CreateClient(clientOptions);
         }
 

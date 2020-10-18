@@ -1,6 +1,7 @@
-﻿using NerdStore.WebApp.MVC;
+﻿using System.Threading.Tasks;
+using Features.Tests;
+using NerdStore.WebApp.MVC;
 using NerdStore.WebApp.Tests.Config;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace NerdStore.WebApp.Tests
@@ -14,12 +15,12 @@ namespace NerdStore.WebApp.Tests
             _testsFixture = testsFixture;
         }
 
-        [Fact(DisplayName = "Realizar cadastro com sucesso")]
+        [Fact(DisplayName = "Realizar cadastro com sucesso"), TestPriority(1)]
         [Trait("Categoria", "Integração Web - Usuário")]
         public async Task Usuario_RealizarCadastro_DeveExecutarComSucesso()
         {
             // Arrange
-            // Act
+            // Act 
             // Assert
         }
     }
