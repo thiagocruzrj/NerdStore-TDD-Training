@@ -20,6 +20,8 @@ namespace NerdStore.WebApp.Tests
         public async Task Usuario_RealizarCadastro_DeveExecutarComSucesso()
         {
             // Arrange
+            var initialResponse = await _testsFixture.Client.GetAsync("/Identity/Account/Register");
+            initialResponse.EnsureSuccessStatusCode();
             // Act 
             // Assert
         }
