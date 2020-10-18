@@ -6,6 +6,7 @@ using Xunit;
 
 namespace NerdStore.WebApp.Tests
 {
+    [CollectionDefinition(nameof(IntegrationWebTestsFixtureCollection))]
     public class UsuarioTests
     {
         private readonly IntegrationTestsFixture<StartupWebTests> _testsFixture;
@@ -15,7 +16,7 @@ namespace NerdStore.WebApp.Tests
             _testsFixture = testsFixture;
         }
 
-        [Fact(DisplayName = "Realizar cadastro com sucesso"), TestPriority(1)]
+        [Fact(DisplayName = "Realizar cadastro com sucesso")]
         [Trait("Categoria", "Integração Web - Usuário")]
         public async Task Usuario_RealizarCadastro_DeveExecutarComSucesso()
         {
